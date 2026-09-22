@@ -7,6 +7,15 @@ output:
     css: style.css
 ---
 
+## Key Concepts | From Story to Model
+
+- **Inference:** use evidence to learn about a process we cannot directly observe.
+- **Story and model:** translate a managerial question into an equation with inputs and an outcome.
+- **Parameters and error:** distinguish unknown relationships from variation the model leaves unexplained.
+- **Fitting:** estimate parameters from observed data; the model remains a simplification.
+
+Today we connect these ideas to simulation and fitting a linear regression.
+
 ## Marketing Analytics Process
 
 <center>
@@ -23,13 +32,67 @@ output:
 
 ![](Figures/hex_parsnip.png){width=500px}
 
+## The Modeling Workflow Across This Unit
+
+Lecture 07 introduced a workflow that connects analysis to a managerial decision:
+
+- **Consider and build:** tell a story and express it as a model (08); refine the explanatory variables (10).
+- **Preprocess:** prepare variables for the model, including dummy coding (12).
+- **Fit:** estimate unknown parameters from data (08).
+- **Evaluate:** interpret estimates and uncertainty (09), and test predictive fit (11).
+- **Predict:** compare possible interventions (09), then apply the same preprocessing to new scenarios (12).
+
+The workflow is iterative: evidence can send us back to revise the story.
+
+## Consider | Kroger's Promotional Budget
+
+Kroger wants to decide how to allocate promotional spending in the soup category. We observe spending and sales, but not the full process connecting them.
+
+- What data would help inform the decision? What would one row represent?
+- What story could explain how promotional spending relates to soup sales?
+- What else might influence sales, or influence when Kroger chooses to promote?
+
+Wrangling and visualization can suggest patterns. A model makes our proposed explanation explicit so we can evaluate it.
+
+## Build | Turn the Story into a Function
+
+Start with the illustrative equation from lecture 07:
+
+$$\text{sales} = 10 + 3 \times \text{promotion_spend}$$
+
+- **Input:** promotional spending. **Output:** predicted sales.
+- **Intercept:** predicted sales are 10 when spending is zero.
+- **Slope:** one more unit of spending is associated with 3 more units of predicted sales.
+
+The values 10 and 3 are hypothetical. Define the units before interpreting them; with real data, we must estimate these numbers.
+
+## Build | Unknown Parameters and Statistical Error
+
+$$\text{sales} = \beta_0 + \beta_1 \times \text{promotion_spend} + \epsilon$$
+
+We observe `sales` and `promotion_spend`. The **parameters** $\beta_0$ and $\beta_1$ are unknown quantities describing the relationship we want to learn.
+
+The **error** $\epsilon$ represents influences on sales that this model does not explicitly explain, such as weather, competitors, and chance variation.
+
+Adding error acknowledges that two observations with the same promotional spending need not have the same sales. A slope is not automatically the causal effect of changing spending; we revisit that distinction in lecture 10.
+
+## All Models Are Wrong (But Some Are Useful)
+
+A model simplifies the true story. Its usefulness depends on the question and whether its assumptions are reasonable.
+
+<center>
+![](Figures/models_rockets.png){width=650px}
+</center>
+
+Which details can our soup-sales model leave out, and which would change the recommendation?
+
 ## Linear Models
 
-Last time we translated a story into a statistical model. In general, a model looks like this:
+Our soup-sales story is an example of a statistical model. A simple linear model looks like this:
 
 $$y = \beta_0 + \beta_1 x + \epsilon$$
 
-Because $y = \beta_0 + \beta_1 x$ is a linear equation, adding $\epsilon$ makes this a **linear model**.
+The equation $y = \beta_0 + \beta_1 x + \epsilon$ is a **linear model** with an error term.
 
 - $y$ is the **outcome** variable (a.k.a., response or dependent variable).
 - $x$ is an **explanatory** variable (a.k.a., a predictor or independent variable, feature, or covariate).
@@ -43,9 +106,11 @@ But what kind of *error*?
 
 If the error includes every other explanatory variable beyond the `X` that we've included in the model, what does the sum of all of their effects look like?
 
-We have to assume $\epsilon$ is *distributed* a certain way, typically:
+For our simulations and the usual regression inference, we assume independent, normally distributed errors with mean zero and constant variance at each value of $x$:
 
-$$\epsilon \sim Normal(0, 1)$$
+$$\epsilon \sim Normal(0, \sigma^2)$$
+
+Here $\sigma$ is the error's standard deviation. It need not equal 1; our simulation below uses $\sigma = 3$.
 
 ---
 
@@ -71,18 +136,18 @@ The normal distribution is one of many *probability distributions*. Here's the *
 
 ---
 
-Okay, but *why* should we use a linear model and assume $\epsilon \sim Normal(0, 1)$?
+Okay, but *why* start with a linear model and normal errors?
 
-- A linear model is simple but a good assumption when we don't know a lot about how our data is created (the story). It says the outcome variable is the result of summing up the effects of the explanatory variable(s).
-- The normal distribution shows up a lot in nature and, like the linear model, is a good assumption when we don't know a lot about the story. It says the effects of all the variables we don't include in the model add up to something that looks like normal error.
+- A linear model is a simple starting story: the expected outcome is a sum of contributions from the explanatory variables.
+- Many small influences can sometimes add up to approximately normal error. This is an assumption to evaluate, not a guarantee that omitted variables behave this way.
 
-A linear model with normal error and a continuous outcome $y$ is known as a **regression**.
+We use **linear regression** to model a continuous outcome $y$. Normal errors support the usual interval estimates; they are not required just to fit a least-squares line.
 
 ## Simulating Data
 
 We now have outlined a complete model:
 
-$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, 1)$$
+$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, \sigma^2)$$
 
 For illustration, let's assume that our model captures the *full* story, *choose* values for the parameters, and generate or **simulate** data using the model.
 
@@ -90,13 +155,13 @@ For illustration, let's assume that our model captures the *full* story, *choose
 
 How do we simulate data from this?
 
-$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, 1)$$
+$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, \sigma^2)$$
 
 ---
 
 How do we simulate data from this?
 
-$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, 1)$$
+$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, \sigma^2)$$
 
 - Choose values for $\beta_0$ and $\beta_1$.
 - Obtain random values for $x$.
@@ -202,7 +267,7 @@ In other words, an inferential model extracts **parameter estimates** from the d
 
 The best line should be the one that makes **the sum** of the vertical bars as **small as possible**.
 
-The vertical bars are called **residuals**, and represent the distance between the data $y$ and a particular line.
+The vertical bars are called **residuals**, and represent the distance between the data $y$ and a particular line. After fitting, a residual is $y - \hat{y}$: an observable estimate of the unobserved error $\epsilon$.
 
 Residuals can be positive and negative, so we make the sum of the **squared residuals** as small as possible.
 
@@ -273,6 +338,7 @@ Our client, Kroger, has requested that we walk them through the basics of linear
 - Discussed linear models.
 - Walked through parameter estimation for a linear model.
 - Introduced tidymodels to fit models.
+- Connected Kroger's managerial question to a story, unknown parameters, and statistical error.
 
 *Next Time*
 
