@@ -7,6 +7,13 @@ output:
     css: style.css
 ---
 
+## Today's Learning Goals
+
+- Translate a customer-spending question into a linear model.
+- Distinguish parameters, statistical error, and fitted residuals.
+- Simulate data and explain how least squares fits a line.
+- Fit a regression with tidymodels and interpret slopes in their units.
+
 ## Key Concepts | From Story to Model
 
 - **Inference:** use evidence to learn about a process we cannot directly observe.
@@ -34,47 +41,56 @@ Today we connect these ideas to simulation and fitting a linear regression.
 
 ## The Modeling Workflow Across This Unit
 
-Lecture 07 introduced a workflow that connects analysis to a managerial decision:
+Our modeling workflow connects analysis to a managerial decision:
 
-- **Consider and build:** tell a story and express it as a model (08); refine the explanatory variables (10).
-- **Preprocess:** prepare variables for the model, including dummy coding (12).
-- **Fit:** estimate unknown parameters from data (08).
-- **Evaluate:** interpret estimates and uncertainty (09), and test predictive fit (11).
-- **Predict:** compare possible interventions (09), then apply the same preprocessing to new scenarios (12).
+- **Consider and build:** tell a story and express it as a model (06); refine the explanatory variables (08).
+- **Preprocess:** prepare variables for the model, including dummy coding (10).
+- **Fit:** estimate unknown parameters from data (06).
+- **Evaluate:** interpret estimates and uncertainty (07), and test predictive fit (09).
+- **Predict:** compare scenarios (07), then apply the same preprocessing to new scenarios (10).
 
 The workflow is iterative: evidence can send us back to revise the story.
 
-## Consider | Kroger's Promotional Budget
+## Consider | Understanding Customer Spending
 
-Kroger wants to decide how to allocate promotional spending in the soup category. We observe spending and sales, but not the full process connecting them.
+A fictional online home-goods retailer wants to understand which customers tend to spend more before planning customer outreach. It has household survey responses linked to customer records.
 
 - What data would help inform the decision? What would one row represent?
-- What story could explain how promotional spending relates to soup sales?
-- What else might influence sales, or influence when Kroger chooses to promote?
+- What story could explain how household income relates to spending at this retailer?
+- What else might influence customer spending?
 
 Wrangling and visualization can suggest patterns. A model makes our proposed explanation explicit so we can evaluate it.
 
+## Our Customer Data
+
+- `home_goods_customers.csv`: 10,000 customers, one row per customer.
+- `HouseholdIncome`: annual household income, in dollars; 200 survey responses are missing.
+- `PreviousSpend`: dollars spent at this retailer over the previous 12 months.
+- `HouseholdSize`: number of people in the household, including the customer.
+
+These are **semi-synthetic teaching data**, not actual retailer results. Use the accompanying `data_dictionary.md` and `customer-data-README.md` for definitions and attribution. Campaign outcomes cover a later 30-day period; today we use historical spending.
+
 ## Build | Turn the Story into a Function
 
-Start with the illustrative equation from lecture 07:
+Start with an illustrative equation. Let `IncomeThousands` be annual household income divided by 1,000:
 
-$$\text{sales} = 10 + 3 \times \text{promotion_spend}$$
+$$\widehat{\text{PreviousSpend}} = 750 + 3 \times \text{IncomeThousands}$$
 
-- **Input:** promotional spending. **Output:** predicted sales.
-- **Intercept:** predicted sales are 10 when spending is zero.
-- **Slope:** one more unit of spending is associated with 3 more units of predicted sales.
+- **Input:** annual household income in thousands of dollars. **Output:** predicted previous 12-month spending in dollars.
+- **Intercept:** predicted spending is $750 at zero income; zero is outside our observed income range.
+- **Slope:** another $1,000 of household income is associated with $3 more predicted spending.
 
-The values 10 and 3 are hypothetical. Define the units before interpreting them; with real data, we must estimate these numbers.
+The values 750 and 3 are hypothetical, not fitted estimates. With observed data, we must estimate these numbers.
 
 ## Build | Unknown Parameters and Statistical Error
 
-$$\text{sales} = \beta_0 + \beta_1 \times \text{promotion_spend} + \epsilon$$
+$$\text{PreviousSpend} = \beta_0 + \beta_1 \times \text{IncomeThousands} + \epsilon$$
 
-We observe `sales` and `promotion_spend`. The **parameters** $\beta_0$ and $\beta_1$ are unknown quantities describing the relationship we want to learn.
+We observe spending and income. The **parameters** $\beta_0$ and $\beta_1$ are unknown quantities describing the relationship we want to learn.
 
-The **error** $\epsilon$ represents influences on sales that this model does not explicitly explain, such as weather, competitors, and chance variation.
+The **error** $\epsilon$ represents influences on spending that this model does not explicitly explain, such as household needs, preferences, and chance variation.
 
-Adding error acknowledges that two observations with the same promotional spending need not have the same sales. A slope is not automatically the causal effect of changing spending; we revisit that distinction in lecture 10.
+Two customers with the same income need not spend the same amount. The slope describes an association; it does not show that changing income would cause spending to change. We revisit that distinction in lecture 08.
 
 ## All Models Are Wrong (But Some Are Useful)
 
@@ -84,11 +100,11 @@ A model simplifies the true story. Its usefulness depends on the question and wh
 ![](Figures/models_rockets.png){width=650px}
 </center>
 
-Which details can our soup-sales model leave out, and which would change the recommendation?
+Which details can our customer-spending model leave out, and which would change the recommendation?
 
 ## Linear Models
 
-Our soup-sales story is an example of a statistical model. A simple linear model looks like this:
+Our customer-spending story is an example of a statistical model. A simple linear model looks like this:
 
 $$y = \beta_0 + \beta_1 x + \epsilon$$
 
@@ -149,7 +165,7 @@ We now have outlined a complete model:
 
 $$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, \sigma^2)$$
 
-For illustration, let's assume that our model captures the *full* story, *choose* values for the parameters, and generate or **simulate** data using the model.
+For illustration, let's assume that our model captures the *full* story, *choose* values for the parameters, and generate or **simulate** data using the model. We use generic `x` and `y` for this small demonstration; these are not the customer CSV's generating values.
 
 ---
 
@@ -327,9 +343,77 @@ reg_model |>
   tidy()
 ```
 
+## From Simulation to Customer Data
+
+Keep `home_goods_customers.csv` in the same working folder as your starter document. Read its dictionary before interpreting the variables.
+
+```{r}
+customers <- read_csv("home_goods_customers.csv", show_col_types = FALSE)
+
+customer_model_data <- customers |>
+  drop_na(HouseholdIncome, PreviousSpend) |>
+  mutate(IncomeThousands = HouseholdIncome / 1000)
+```
+
+This leaves 9,800 customers with observed income and spending. Missing income is not zero income. We omit those 200 customers for today's model; missing-data strategies come later.
+
+## Plotting Customer Spending
+
+```{r, fig.height=3.5}
+customer_model_data |>
+  ggplot(aes(x = IncomeThousands, y = PreviousSpend)) +
+  geom_point(alpha = 0.15) +
+  labs(x = "Annual household income ($1,000s)",
+       y = "Previous 12-month spending ($)")
+```
+
+What pattern would a straight line capture? What variation would remain?
+
+## Fit the Customer Model
+
+```{r}
+customer_model <- linear_reg() |>
+  set_engine("lm") |>
+  fit(PreviousSpend ~ IncomeThousands, data = customer_model_data)
+
+customer_model |>
+  tidy()
+```
+
+Focus on the `estimate` column today. We interpret the other columns next time.
+
+## Interpret the Customer Model
+
+The fitted equation is approximately:
+
+$$\widehat{\text{PreviousSpend}} = 760.42 + 2.57 \times \text{IncomeThousands}$$
+
+- Another $1,000 of annual household income is associated with about $2.57 more spending at this retailer over 12 months.
+- The intercept is a prediction at zero income, outside the observed range of $15,000 to $350,000.
+- Individual customers differ from their fitted values; these differences are residuals.
+
+This association alone does not tell the retailer which outreach would increase spending.
+
+## More Than One Explanatory Variable
+
+The same model can include a second explanatory variable:
+
+$$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon$$
+
+In `fit()`, the formula becomes `y ~ x1 + x2`. The outcome is on the left; explanatory variables are on the right.
+
+Each slope describes a one-unit difference in its variable **holding the other included variable fixed**. It is still an association unless we have a basis for a causal interpretation.
+
+The exercise applies this idea to two customer characteristics. We examine explanatory-variable choices more closely in lecture 08.
+
 ## Live Coding Exercise
 
-Our client, Kroger, has requested that we walk them through the basics of linear regression using a hypothetical example. Let's construct an example, define our story, translate it to a model, use that model to simulate data, and fit our model to the simulated data.
+The home-goods retailer's leadership wants a simple hypothetical demonstration of how a model can help them understand customer spending. What would make the demonstration convincing and useful?
+
+- What customer story should we explore, and what do its terms mean?
+- What assumptions would make the example plausible?
+- How could we tell whether our analysis recovers the story we chose?
+- What would this demonstration leave unanswered about actual customers?
 
 ## Wrapping Up
 
@@ -338,7 +422,7 @@ Our client, Kroger, has requested that we walk them through the basics of linear
 - Discussed linear models.
 - Walked through parameter estimation for a linear model.
 - Introduced tidymodels to fit models.
-- Connected Kroger's managerial question to a story, unknown parameters, and statistical error.
+- Connected the retailer's customer-spending question to a story, unknown parameters, and statistical error.
 
 *Next Time*
 
@@ -350,11 +434,20 @@ Our client, Kroger, has requested that we walk them through the basics of linear
 
 *Artwork by @allison_horst*
 
-## Exercise 7
+## Exercise 5: Customer Spending
 
-Kroger is specifically interested in whether their spend on promotions (`Any_Promo_Spend`) and discounts (`Price_Decr_Spend`) is driving their sales (`Sales`) in the soup category. Do the following:
+The home-goods retailer wants to understand how past customer spending differs with household income and household size before planning outreach.
 
-1. Import the soup data and the `tidyverse` and `tidymodels` libraries.
-2. Create a regression model and fit it to the appropriate variables.
-3. Examine the coefficients - do promotional spend and price decreases appear to have a positive or negative effect on sales?
-4. Render the Quarto document into Word and upload to Canvas.
+Use `home_goods_customers.csv` and its data dictionary. The outcome is `PreviousSpend` (dollars at this retailer over 12 months); the two explanatory variables are `HouseholdIncome` (annual dollars) and `HouseholdSize` (people).
+
+Express income in thousands of dollars. Use customers with observed values for the model's variables and report how many are included. The question concerns historical spending, not the later email campaign.
+
+## Exercise 5: The Client Report
+
+Submit a Word document rendered from Quarto with your code, results, and interpretation. Include:
+
+- A fitted linear model relating previous spending to both household characteristics, with a coefficient table.
+- The direction and dollar interpretation of each slope, holding the other included characteristic fixed.
+- A brief conclusion for the retailer, including why these associations alone do not establish that an outreach action would increase spending.
+
+Choose the code operations and their sequence. Upload your report to Canvas's **Exercise 5** assignment.

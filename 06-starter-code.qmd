@@ -1,0 +1,156 @@
+---
+title: "06 Starter Code"
+format: docx
+editor: visual
+---
+
+This file contains the code for Lecture 06: Linear Models.
+
+Keep `home_goods_customers.csv` in your working folder. Read `data_dictionary.md`
+and `customer-data-README.md` for the case definitions and attribution. The data
+describe 10,000 customers of a fictional home-goods retailer and are semi-synthetic.
+
+## A Note on Randomization
+
+```{r}
+# Random number are, well, random.
+# if you run this chunk a few times, you'll see that the output is different
+# each time, and it's different from what Dr. Bale's slides show as well
+rnorm(1)
+rnorm(1)
+rnorm(1)
+```
+
+```{r}
+# But using set.seed() we at least start at the *same* random number each time.
+set.seed(42)
+rnorm(1)
+
+set.seed(42)
+rnorm(1)
+
+set.seed(42)
+rnorm(1)
+```
+
+## Simulate Data
+
+Whenever we design a statistical model, it is possible to simulate data from this model. In other words, we can pretend that our model captures the true "story" of how data is generated, and use that model to generate data. The generic `x` and `y` example below is separate from the customer CSV; its parameter values are not the customer dataset's generating values.
+
+```{r}
+# Load packages.
+library(tidyverse)
+
+## set a random seed so that our simulation is consistent
+set.seed(42)
+
+# Set the parameter values.
+beta0 <- 3
+beta1 <- 7
+
+# Simulate data.
+sim_data <- tibble(
+  x = runif(100, min = 0, max = 7),
+  y = beta0 + beta1 * x + rnorm(100, mean = 0, sd = 3)
+)
+```
+
+We can also plot the simulated data.
+
+```{r}
+# TODO: Make a scatterplot showing the relationship between x and y in sim_data.
+# How does the pattern change when you change the simulation above?
+```
+
+Load the `tidymodels` package.
+
+```{r}
+library(tidymodels)
+```
+
+To define a regression model, we just need two things: the **model type** and how the model will be estimated (the **engine**).
+
+```{r}
+# Specify the model type and engine.
+reg_model <- linear_reg() |> 
+  set_engine("lm")
+```
+
+```{r}
+# what is this reg_model object?
+reg_model
+```
+
+```{r}
+# we can fit our model to our data
+(reg_model <- reg_model |>
+  fit(y ~ x, data = sim_data))
+```
+
+```{r}
+# view a tabulated version of the model results
+reg_model |>
+  tidy()
+```
+
+## From Simulation to Customer Data
+
+`HouseholdIncome` measures annual household income in dollars. `PreviousSpend`
+measures spending at this retailer over the previous 12 months.
+
+```{r}
+customers <- read_csv("home_goods_customers.csv", show_col_types = FALSE)
+
+customer_model_data <- customers |>
+  drop_na(HouseholdIncome, PreviousSpend) |>
+  mutate(IncomeThousands = HouseholdIncome / 1000)
+```
+
+This leaves 9,800 customers. The 200 missing incomes are not zero incomes;
+today's model omits those customers.
+
+## Plotting Customer Spending
+
+```{r}
+customer_model_data |>
+  ggplot(aes(x = IncomeThousands, y = PreviousSpend)) +
+  geom_point(alpha = 0.15) +
+  labs(x = "Annual household income ($1,000s)",
+       y = "Previous 12-month spending ($)")
+```
+
+## Fit the Customer Model
+
+```{r}
+customer_model <- linear_reg() |>
+  set_engine("lm") |>
+  fit(PreviousSpend ~ IncomeThousands, data = customer_model_data)
+
+customer_model |>
+  tidy()
+```
+
+Focus on the `estimate` column. Interpret the slope in dollars of previous
+12-month spending per $1,000 of annual household income. It describes an
+association, not an established causal effect. The intercept is a prediction at
+zero income, outside the observed range of $15,000 to $350,000.
+
+## More Than One Explanatory Variable
+
+The formula `y ~ x1 + x2` includes two explanatory variables. Each slope describes
+a one-unit difference in its variable, holding the other included variable fixed.
+
+## Live Coding Exercise
+
+The home-goods retailer's leadership wants a simple hypothetical demonstration
+of how a model can help them understand customer spending. What would make the
+demonstration convincing and useful?
+
+- What customer story should we explore, and what do its terms mean?
+- What assumptions would make the example plausible?
+- How could we tell whether our analysis recovers the story we chose?
+- What would this demonstration leave unanswered about actual customers?
+
+```{r}
+
+```

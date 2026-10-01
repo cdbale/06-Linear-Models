@@ -1,0 +1,126 @@
+Lecture 06 - Linear Models
+Completed entries are appended after verification.
+
+2026-09-28 - Authorized lecture update
+
+1. Slides, names, and customer-data replacement (skill checklist 1).
+Location: slide source and named HTML filenames; Today's Learning Goals (new);
+The Modeling Workflow Across This Unit; Consider | Kroger's Promotional Budget;
+Build | Turn the Story into a Function; Build | Unknown Parameters and Statistical
+Error; All Models Are Wrong; Linear Models; View Model Results; Live Coding
+Exercise; Wrapping Up.
+Evidence: filenames say 08; cross-references use old lecture numbers; managerial
+story uses soup promotional budgets absent from new customer data; goals absent.
+Change: rename source and named HTML to 06, without regenerating HTML; update unit
+numbers and customer story; retain simulation, distributions, residuals, least
+squares, and tidymodels progression. Add a small applied income/spending example,
+explicit units/missingness and association language, required goals, and an
+open-ended live-coding prompt. Copy only the three student-release data files.
+Effects: corresponding starter changes in item 3; exercise in item 2; generated
+HTML remains stale until item 9. No instructor generating information released.
+Decision: Approve (explicit user request and standing slide requirements).
+Status: Verified.
+
+2a. Concluding exercise within the slides (skill checklist 2, authorized part).
+Location: Exercise 7 slide, to become Exercise 5: Customer Spending / Client Report.
+Evidence: asks for a two-predictor soup regression and step-by-step operations;
+current Canvas assignment is Exercise 5, not Exercise 7.
+Change: retain a two-predictor model using PreviousSpend, HouseholdIncome (scaled
+to thousands), and HouseholdSize. Give context and report requirements; leave
+analysis operations to students. Explain two-predictor formula syntax before the
+exercise so all required modeling skills are taught. Exercise remains last.
+Effects: solution/rubric and Canvas remain pending in 2b, 5, and 6.
+Decision: Approve (requested slide data replacement and standing exercise design).
+Status: Verified.
+
+3. Corresponding starter-code changes (skill checklist 3).
+Location: 08-starter-code.qmd filename, YAML, introduction, applied example,
+and Live Coding Exercise.
+Evidence: name/title say 08; client is Kroger; starter has no customer example.
+Change: rename to 06-starter-code.qmd; mirror the changed slides' setup, customer
+example, names, and open-ended prompt. Keep simulation and new modeling code.
+Effects: Canvas attachment in item 7; reduction remains a separate decision.
+Decision: Approve (explicit filename request and slide-code propagation).
+Status: Verified.
+
+Verification notes (2026-09-28):
+- Item 1: inspected source/diff; slide 2 Today's Learning Goals; slides 7-13
+  workflow/customer story; slide 18 Simulating Data; slides 39-43 customer
+  setup, plot, fit, interpretation, and two-variable formula; slide 44 Live
+  Coding Exercise; slide 45 Wrapping Up. Numbers follow source boundaries,
+  including title slide, not a new render. Original simulation/fitting code
+  retained. Renamed HTML is byte-for-byte identical to its previous version
+  (Git blob e5e114503e1f2ea9e0693ccde21deb11da1f433b); its CONTENT is still old.
+- Item 2a: concluding slides 46-47 are Exercise 5: Customer Spending and
+  Exercise 5: The Client Report. All exercise methods are introduced in slides
+  or prior lectures. Two-predictor base-R fit on 9,800 rows verified:
+  intercept 648.566789, IncomeThousands 2.522345, HouseholdSize 46.850605.
+  Separate solution/rubric remains pending in 2b; no full-exercise completion claim.
+- Item 3: all 13 starter chunks and 11 slide chunks parse; customer setup,
+  plot, and fit code match between documents. Executed tidyverse setup,
+  simulation, and constructed plots without slide rendering. Base-R simple
+  fit confirms 760.419883 intercept and 2.569739 income slope. Existing R
+  installation lacks tidymodels/parsnip, so their runtime was not executed;
+  model interface checked against official parsnip documentation:
+  https://parsnip.tidymodels.org/reference/linear_reg.html
+  https://parsnip.tidymodels.org/reference/fit.html
+- Data copy exactly matches the current local student CSV (including user's
+  uncommitted data edits), SHA256
+  303F7EFF06BD6868E3B5171D97D2D5A2D4E0025AADB0CC53A54302359ED2E7B5.
+  Copied dictionary and student README (renamed customer-data-README.md)
+  with attribution intact. No private instructor files copied or modified.
+- Check script: course-root tmp/lecture06-review-qa/verify.R. Source diff and
+  git diff --check reviewed. No rendering, commits, pushes, or Canvas edits.
+
+2026-09-28 - Approved items 2b and 4
+
+2b. Update the separate solution and existing rubric (skill checklist 2).
+Location: Exercise 7 Solution.qmd and Exercise 7 Solution.docx.
+Evidence: solution still fits Sales ~ Any_Promo_Spend + Price_Decr_Spend; rubric
+awards 1 point for setup, 2 for model, 2 for interpretation; name says Exercise 7.
+Proposal: rename to Exercise 5, align with final slide instructions, replace the
+soup model and interpretation, retain the five-point rubric structure, and
+regenerate the Word solution after source approval.
+Effects: enables the Canvas rubric note (6); prevents a stale answer key.
+Decision: Approve - explicitly approved by Cam on 2026-09-28.
+Status: Verified.
+
+4. Reduce prior-material starter code (skill checklist 4).
+Location: 06-starter-code.qmd, simulated-data and customer-data scatterplots.
+Evidence: Lecture 04 taught ggplot(aes(...)) + geom_point(); Lecture 02 taught
+import and mutate; Lecture 04 taught drop_na. Original starter has one eligible
+non-boilerplate prior-material step: plotting simulated data. New customer
+example adds a second independent plot. Setup, simulation, model specification,
+fit, tidy, and the empty live-coding chunk are excluded.
+Proposal: remove the complete simulated-data scatterplot block (one of the two
+eligible plot steps), replacing it with a result-oriented TODO; retain the
+customer plot as a reference. This is 50% of eligible whole steps in the updated
+starter, with setup and new modeling concepts intact.
+Effects: recheck syntax around the gap before Canvas upload (7).
+Decision: Approve - explicitly approved by Cam on 2026-09-28.
+Status: Verified.
+
+Verification notes (2026-09-28):
+- Item 2b: renamed/replaced Exercise 7 Solution.qmd/.docx with Exercise 5
+  Solution.qmd/.docx. Updated instructions, model, sample-size explanation,
+  interpretation, and existing five-point rubric (1 setup, 2 model, 2 interpretation).
+- Solution uses PreviousSpend ~ IncomeThousands + HouseholdSize on 9,800 rows.
+  Executed with tidymodels/parsnip; coefficients verified at 648.566789,
+  2.522345, and 46.850605. No campaign outcomes used as historical predictors.
+- Quarto successfully generated the Word solution. Added solution-reference.docx
+  as its reproducible formatting dependency. All three Word-exported page previews
+  visually inspected: rubric together; code readable; results and interpretation
+  together. Packaged render_docx.py was attempted but LibreOffice is absent;
+  native Word PDF export and bundled PDFium supplied the verified page images.
+- Item 4: removed the complete simulated-data plotting step, replacing it with
+  a TODO describing the desired scatterplot. Retained the customer-data plot,
+  setup, simulation, new modeling concepts, and empty live-coding chunk.
+- Parsed all 13 starter chunks and executed surrounding code successfully with
+  tidymodels; intentional TODO remains empty. Verification script:
+  course-root tmp/lecture06-review-qa/verify-approved.R.
+- Missing modeling packages were installed only in task-local
+  tmp/lecture06-review-qa/r-library. This resolves the earlier runtime-check
+  limitation without changing the student's source or global R installation.
+- Old Word solution preserved in the course-root QA folder, outside this lecture
+  repository. No slide render, Canvas write, commit, push, or soup-data removal.
+- User explicitly kept all other checklist entries pending.

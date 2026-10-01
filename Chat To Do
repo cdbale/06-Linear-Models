@@ -1,0 +1,83 @@
+Lecture 06 - Linear Models
+Agent review: 2026-09-28
+
+Repository boundary verified with git rev-parse: 06-Linear-Models; branch main,
+origin https://github.com/cdbale/06-Linear-Models.git; initial HEAD 001cbda.
+Initial lecture working tree clean. No lecture-specific AGENTS/build instructions.
+Authoritative source: 08 Linear Models.Rmd (ioslides, widescreen, style.css).
+Existing HTML: 08-Linear-Models.html and index.html; both predate current source.
+Other artifacts: 08-starter-code.qmd, Exercise 7 Solution.qmd/.docx (includes
+five-point rubric), soup_data.csv, Figures/. No separate exercise handout.
+Previous lectures reviewed: 02 R and Transform Data, 04 Visualize Continuous
+Data, 05 Tidy Data and Types. No rendering authorized.
+
+AUTHORIZED CHANGES VERIFIED - moved to Chat Completed
+
+NEW SUGGESTIONS - PENDING REVIEW (choose Approve, Alter, or Reject)
+
+5. Post the exercise instructions to Canvas (skill checklist 5).
+Location: Fall 2026 MKTG 411 course 38688, sections 001 (40948) and 002 (40947),
+Exercise 5 assignment 1452129.
+Evidence: description is blank. Verified through paginated API inventory.
+Proposal: post finalized exercise text from the slides, preserving settings.
+Effects: should match 2a and approved solution 2b.
+Decision: Pending - Approve / Alter / Reject.
+Status: Needs update.
+
+6. Add Canvas rubric note (skill checklist 6).
+Location: Grade Exercise 5 assignment 1452147 in course 38688.
+Evidence: asks students to grade/comment on their submission but has no rubric
+location note. The local Exercise 5 solution now contains the aligned rubric
+(item 2b verified); this Canvas edit remains pending.
+Proposal: after 2b, append a note that the rubric is in the exercise solution.
+Effects: depends on aligned solution, preserves all current grading instructions.
+Decision: Pending - Approve / Alter / Reject.
+Status: Needs update.
+
+7. Update Canvas starter attachment (skill checklist 7).
+Location: Inference module 415182, item 3180653, old file 13545184
+(08-starter-code.qmd). Target is a module File item, not an assignment attachment.
+Evidence: still named 08. Course folder 1611747 already also has a different
+06-starter-code.qmd (13545259); do not overwrite that unrelated file by name.
+Proposal: upload finalized Lecture 06 starter and replace this specific module
+item's target/name, checking identity to avoid a duplicate-name collision.
+Effects: depends on 3 and decision on 4. Preserve unrelated course files.
+Decision: Pending - Approve / Alter / Reject.
+Status: Needs update.
+
+8. GitHub submission (skill checklist 8).
+Location: lecture repository main -> origin/main.
+Evidence: live origin/main verified at 001cbda on 2026-09-28. Authorized edits
+remain uncommitted. No push permission supplied.
+Proposal: after review, commit only authorized lecture changes and push main;
+verify actual remote state. Do not submit the private data repository.
+Effects: publishing updated slides additionally requires item 9.
+Decision: Pending - Approve / Alter / Reject.
+Status: Blocked - awaiting GitHub permission.
+
+9. Render and publish slides; verify Canvas link (skill checklist 9).
+Location: 06-Linear-Models.html, index.html; Canvas slide link item 3180651,
+https://cdbale.github.io/06-Linear-Models/#1; legacy HTML file item 3180652.
+Evidence: live Pages HTTP 200 on 2026-09-28 still contains soup, lacks HouseholdIncome
+and learning goals. Existing generated HTML uses the previous lesson; source edits do not
+update it. Canvas's Pages URL already uses 06. No local automated build found.
+Proposal: on explicit render authorization, render and inspect slides, update
+index.html, publish via 8, verify deployed customer-data version, then refresh
+Canvas link only if needed and reconcile the stale downloadable HTML attachment.
+Effects: depends on 1-3 and 8. No slide generation performed during review.
+Decision: Pending - Approve / Alter / Reject.
+Status: Blocked - awaiting render/publication authorization and deployment.
+
+10. Retire stale local soup data and README title.
+Location: soup_data.csv and README.md (currently '# 09-Linear-Models').
+Evidence: local soup copy remains although the user has replaced the data;
+readme still uses an older lecture number.
+Proposal: remove the obsolete local soup CSV after solution migration (2b), and
+update README to identify Lecture 06, current source/starter/data, and render
+status. Do not remove unrelated or archived Canvas files.
+Effects: solution migration (2b) is now verified; cleanup remains pending.
+Decision: Pending - Approve / Alter / Reject.
+Status: Needs update.
+
+USER REQUESTED CHANGES
+(Reserved for Cam's additions after discussion; preserve this section.)

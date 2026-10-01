@@ -1,0 +1,99 @@
+---
+title: "Exercise 5 Solution"
+author: "Cameron Bale"
+format:
+  docx:
+    reference-doc: solution-reference.docx
+execute:
+  message: false
+  warning: false
+---
+
+## Customer Spending
+
+The retailer wants to understand how past spending differs with household income and size before planning outreach. This solution includes the model and five-point rubric. Both slopes are positive; neither establishes a causal outreach effect.
+
+## Exercise Instructions
+
+Use `home_goods_customers.csv` and its data dictionary. The outcome is `PreviousSpend` (dollars at this retailer over 12 months); the two explanatory variables are `HouseholdIncome` (annual dollars) and `HouseholdSize` (people).
+
+Express income in thousands of dollars. Use customers with observed values for the model's variables and report how many are included. The question concerns historical spending, not the later email campaign.
+
+Submit a Word document rendered from Quarto with your code, results, and interpretation. Include:
+
+- A fitted linear model relating previous spending to both household characteristics, with a coefficient table.
+- The direction and dollar interpretation of each slope, holding the other included characteristic fixed.
+- A brief conclusion for the retailer, including why these associations alone do not establish that an outreach action would increase spending.
+
+Choose the code operations and their sequence. Upload your report to Canvas's **Exercise 5** assignment.
+
+## Grading Rubric
+
+**Five points total:**
+
+- **Setup and data, 1 point:** load libraries and data, scale income to thousands, use complete observations for the model's variables, and report the sample size.
+- **Regression model, 2 points:** fit `PreviousSpend ~ IncomeThousands + HouseholdSize` and report its coefficients.
+- **Interpretation, 2 points:** interpret both slopes in dollars, holding the other included variable fixed, and distinguish association from a causal outreach effect in the client conclusion.
+
+Award credit for equivalent correct approaches; students do not need to reproduce this code sequence.
+
+## Import Libraries and Data
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+
+customers <- read_csv(
+  "home_goods_customers.csv", show_col_types = FALSE
+)
+```
+
+These semi-synthetic teaching data describe a fictional retailer. The dictionary and `customer-data-README.md` provide the definitions, context, and attribution.
+
+## Prepare the Model Data
+
+Income is recorded in annual dollars; dividing by 1,000 makes its slope easier to interpret. Missing survey responses are not zero values.
+
+```{r}
+customer_model_data <- customers |>
+  drop_na(HouseholdIncome, HouseholdSize, PreviousSpend) |>
+  mutate(IncomeThousands = HouseholdIncome / 1000)
+
+nrow(customer_model_data)
+```
+
+The model includes **9,800 customers**. The other 200 customers have missing income. Missing values in variables outside this model, such as home size, do not require excluding additional customers here.
+
+## Model Estimation
+
+The two characteristics enter the same regression, so each slope describes an association holding the other included characteristic fixed.
+
+```{r}
+spending_model <- linear_reg() |>
+  set_engine("lm") |>
+  fit(
+    PreviousSpend ~ IncomeThousands + HouseholdSize,
+    data = customer_model_data
+  )
+```
+
+{{< pagebreak >}}
+
+## Model Results
+
+Display the coefficient estimates. The lecture focuses on these estimates; inference about their uncertainty follows in the next lecture.
+
+```{r}
+spending_model |>
+  tidy() |>
+  select(term, estimate) |>
+  knitr::kable(digits = 3, col.names = c("Term", "Estimate"))
+```
+
+## Interpretation for the Retailer
+
+- **Household income:** holding household size fixed, another \$1,000 in annual household income is associated with about **\$2.52 more spending** at this retailer over the previous 12 months.
+- **Household size:** holding annual household income fixed, one additional household member is associated with about **\$46.85 more spending** over the previous 12 months.
+- **Intercept:** the fitted value is about \$648.57 when both income and household size are zero. Neither zero is in its observed range, so this is not a meaningful customer profile in these data.
+
+Customers with higher income and larger households tend to have higher past spending in this model. That can inform a description of customer profiles, but it does not establish which outreach would increase spending. These characteristics were not randomly assigned, other influences may explain part of the associations, and historical spending is not an outcome of the later email campaign.
