@@ -502,3 +502,53 @@ Verification notes (2026-10-05):
   customer data, dictionary, attribution, solution, and manual render workflow.
 - No unrelated or archived Canvas files were removed.
 
+
+2026-10-05 - Canvas starter upload
+
+7. Update Canvas starter attachment (skill checklist 7).
+Location: Inference module 415182, item 3180653, old file 13545184
+(08-starter-code.qmd). Target is a module File item, not an assignment attachment.
+Evidence: still named 08. Course folder 1611747 already also has a different
+06-starter-code.qmd (13545259); do not overwrite that unrelated file by name.
+Proposal: upload finalized Lecture 06 starter and replace this specific module
+item's target/name, checking identity to avoid a duplicate-name collision.
+Effects: depends on 3 and decision on 4. Preserve unrelated course files.
+Decision: Approve - explicitly requested by Cam on 2026-10-05.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Fresh paginated inventory confirmed the old starter and HTML module entries
+  were already removed. Added one current starter entry after 06 - Slides.
+- Uploaded 06-starter-code.qmd to the Lecture 06 - Linear Models folder;
+  file 13981356, module item 3294325, position 7, size 4,386 bytes.
+- Downloaded the saved file and compared SHA-256 with the finalized local file:
+  E2B00C760535A3018F914FCDD1760F15985F95F082939C996137A06037757D6B.
+- Fresh GET confirms the correct title and file target, with one module entry.
+  Existing unrelated 06-starter-code.qmd (13545259) was not overwritten.
+- Retained the unpublished module/item state; the new file is locked like
+  the other prepared Lecture 06 materials. Release remains a separate decision.
+
+
+2026-10-05 - GitHub submission
+
+8. GitHub submission (skill checklist 8).
+Location: lecture repository main -> origin/main.
+Evidence: live origin/main verified at 001cbda on 2026-09-28. Authorized edits
+remain uncommitted. No push permission supplied.
+Proposal: after review, commit only authorized lecture changes and push main;
+verify actual remote state. Do not submit the private data repository.
+Effects: publishing updated slides additionally requires item 9.
+Decision: Approve - explicitly requested by Cam on 2026-10-05.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Fetched origin, inspected repository boundary, branch, upstream, and changes.
+- Committed all current Lecture 06 changes, including Cam's edits, rendered
+  slides, starter, solution source, new figures, PDF, and item 10 cleanup.
+- Pushed main to https://github.com/cdbale/06-Linear-Models.git.
+  Content commit: 7a864e948b06cec60c4f56415b60359890ea229b. Live ls-remote confirmed it matches local HEAD.
+- Final tracking records and pending findings are included in a subsequent
+  commit; final verification checks clean Git state and matching remote HEAD.
+- No other lecture repositories or private data repository were changed.
+- GitHub Pages deployment remains separately pending under item 9 because
+  the Actions service is delaying hosted-runner assignment.

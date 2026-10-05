@@ -13,28 +13,7 @@ Data, 05 Tidy Data and Types. No rendering authorized.
 
 AUTHORIZED CHANGES VERIFIED - moved to Chat Completed
 
-AUTHORIZED REMAINING WORK
-
-7. Update Canvas starter attachment (skill checklist 7).
-Location: Inference module 415182, item 3180653, old file 13545184
-(08-starter-code.qmd). Target is a module File item, not an assignment attachment.
-Evidence: still named 08. Course folder 1611747 already also has a different
-06-starter-code.qmd (13545259); do not overwrite that unrelated file by name.
-Proposal: upload finalized Lecture 06 starter and replace this specific module
-item's target/name, checking identity to avoid a duplicate-name collision.
-Effects: depends on 3 and decision on 4. Preserve unrelated course files.
-Decision: Approve - explicitly requested by Cam on 2026-10-05.
-Status: In progress - authorized upload and verification.
-
-8. GitHub submission (skill checklist 8).
-Location: lecture repository main -> origin/main.
-Evidence: live origin/main verified at 001cbda on 2026-09-28. Authorized edits
-remain uncommitted. No push permission supplied.
-Proposal: after review, commit only authorized lecture changes and push main;
-verify actual remote state. Do not submit the private data repository.
-Effects: publishing updated slides additionally requires item 9.
-Decision: Approve - explicitly requested by Cam on 2026-10-05.
-Status: In progress - commit and push authorized.
+AUTHORIZED REMAINING WORK - item 9 awaits GitHub service recovery
 
 9. Render and publish slides; verify Canvas link (skill checklist 9).
 Location: 06-Linear-Models.html, index.html; Canvas slide link item 3180651,
@@ -47,7 +26,75 @@ index.html, publish via 8, verify deployed customer-data version, then refresh
 Canvas link only if needed and reconcile the stale downloadable HTML attachment.
 Effects: depends on 1-3 and 8. No slide generation performed during review.
 Decision: Approve - explicitly requested by Cam on 2026-10-05.
-Status: In progress - user-rendered HTML inspected; publication and upload authorized.
+Status: Blocked - GitHub Actions incident delays Pages deployment.
+
+Work completed and verification limit (2026-10-05):
+- Inspected Cam's existing HTML; both HTML files match. All 41 instructional
+  headings match current source in order; rocket image is embedded. No render
+  performed. The committed index matches local HTML after line-ending normalization.
+- Uploaded 06-Linear-Models.html to Canvas: file 13981354, module item 3294324,
+  position 6, size 4,219,544 bytes. Downloaded file matches local SHA-256:
+  CD31CD91DE059725BBF71E02B730E8DE6955A08F301E0C71D71E86C445A1EEFD.
+- Fresh inventory confirms one current HTML item and the intended starter;
+  old module attachments were already removed. Unrelated items were preserved.
+- Updated 06 - Slides item 3180651 and read back the saved versioned URL:
+  https://cdbale.github.io/06-Linear-Models/?v=7a864e948b06cec60c4f56415b60359890ea229b#1
+  Preserved title, new-tab behavior and unpublished state.
+- Pages run 37365873753 for 7a864e948b06cec60c4f56415b60359890ea229b remained queued during the bounded check.
+  GitHub reports an active Actions incident with delayed runner assignment:
+  https://stspg.io/c11dc9nb1zdq
+- Fresh fetch from the saved Canvas URL still returns the prior slide version.
+  Therefore item 9 remains active; no deployment completion is claimed.
+- Outstanding: verify successful deployment for the latest main commit and
+  fetch the Canvas destination again. Refresh the version query if needed;
+  compare against the committed index.html (Git uses LF line endings).
+NEW AUDIT FINDINGS - PENDING REVIEW
+
+24. Refresh the Exercise 5 solution delivery.
+Location: local Exercise 5 Solution.qmd/.docx; Canvas files 13545257
+(Exercise 05 Solution.qmd) and 13545231 (Exercise 05 Solution.docx).
+Evidence: both Canvas solution files still teach RFM recency/frequency and
+has the old rubric. The current customer-spending solution and rubric are in
+the lecture repository. Its local Word output predates the October 5 source
+edits, although its instructions and rubric still match the current exercise.
+Proposal: render the current solution into Word, inspect it, and upload/link
+the current Quarto and Word solution in the intended grading location.
+Effects: makes the rubric note in Grade Exercise 5 useful for this exercise.
+Decision: Pending - Approve / Alter / Reject.
+Status: Needs update.
+
+25. Include the customer-data README with the Canvas materials.
+Location: 06-starter-code.qmd opening instructions; customer-data-README.md;
+Canvas Inference module 415182.
+Evidence: the starter asks students to read customer-data-README.md, but the
+complete Canvas file inventory has no copy. The GitHub repository includes it.
+Proposal: add the README to the Lecture 06 Canvas materials or link its current
+GitHub copy so students can read the case context and attribution.
+Effects: fulfills the starter's reference and keeps the reuse notice with data.
+Decision: Pending - Approve / Alter / Reject.
+Status: Needs update.
+
+26. Release the prepared Lecture 06 materials when ready.
+Location: Canvas Inference module 415182, Lecture 06 module items, dataset,
+dictionary, Exercise 5 (1452129), and Grade Exercise 5 (1452147).
+Evidence: module and Lecture 06 items/assignments are unpublished; files are
+locked. This existing staging state was preserved during the requested uploads.
+Proposal: choose release timing, then publish/unlock the intended materials
+without prematurely releasing the later lectures in the same module.
+Effects: required for students to access the prepared Canvas materials.
+Decision: Pending - Approve / Alter / Reject.
+Status: Needs update - release timing not specified.
+
+27. Place Exercise 5 in the Linear Models module block.
+Location: Canvas Inference module 415182, Exercise 5 item 3180655 and
+Grade Exercise 5 item 3180656; Evaluate Model Fit header 3180654.
+Evidence: both Exercise 5 assignments currently appear below the Evaluate
+Model Fit header, even though they now correspond to Lecture 06 Linear Models.
+Proposal: move the two assignment entries after the Lecture 06 starter and
+before the Evaluate Model Fit header, preserving assignment settings.
+Effects: makes Canvas sequence match the concluding exercise in Lecture 06.
+Decision: Pending - Approve / Alter / Reject.
+Status: Needs update.
 
 USER REQUESTED CHANGES
 (Reserved for Cam's additions after discussion; preserve this section.)
