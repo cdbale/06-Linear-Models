@@ -66,14 +66,5 @@ Verification notes (2026-10-05):
   New solution items and updated starter remain unpublished with locked files.
 - No GitHub push was performed; current repository edits are held locally.
 
-28. Synchronize the current repository updates when publication is authorized.
-Location: local Lecture 06 repository and origin/main.
-Evidence: current starter, Word solution, overview README and data-README
-removal are prepared locally; Canvas uploads are verified. A GitHub push also
-triggers the public Pages workflow.
-Proposal: hold these changes locally until Cam authorizes publication, then
-push the lecture updates and verify the remote state and deployed content.
-Decision: Deferred - Cam requested no material publication yet.
-Status: Needs update - intentionally deferred.
 USER REQUESTED CHANGES
 (Reserved for Cam's additions after discussion; preserve this section.)

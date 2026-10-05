@@ -629,3 +629,24 @@ Verification notes (2026-10-05):
 - Added Word and Quarto solution files below the two assignments.
 - No assignment was moved above the Evaluate Model Fit heading; all existing
   module items retain their prior relative ordering.
+
+2026-10-05 - Authorized GitHub synchronization
+
+28. Synchronize the current repository updates when publication is authorized.
+Location: local Lecture 06 repository and origin/main.
+Evidence: current starter, Word solution, overview README and data-README
+removal are prepared locally; Canvas uploads are verified. A GitHub push also
+triggers the public Pages workflow.
+Proposal: hold these changes locally until Cam authorizes publication, then
+push the lecture updates and verify the remote state and deployed content.
+Decision: Approve - Cam explicitly requested pushing all new changes to GitHub.
+Status: Verified.
+Verification notes (2026-10-05):
+- Fetched origin, inspected main and its upstream, and confirmed the working
+  tree was clean with one prepared commit ahead of origin/main.
+- Pushed ab7427da2c55253ce5d431b8cfa3dfeacda4461c to GitHub main.
+  Live ls-remote confirms the remote commit matches local HEAD.
+- This completion record is included in the final tracking commit and push;
+  final checks confirm a clean working tree and matching GitHub branch.
+- Canvas publication remains deferred under item 26; no Canvas edits made.
+
