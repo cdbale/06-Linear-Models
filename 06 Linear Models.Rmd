@@ -14,202 +14,139 @@ output:
 - Simulate data and explain how least squares fits a line.
 - Fit a regression with tidymodels and interpret slopes in their units.
 
-## Key Concepts | From Story to Model
+## Models Quantify Inputs and Outcomes
 
-- **Inference:** use evidence to learn about a process we cannot directly observe.
-- **Story and model:** translate a managerial question into an equation with inputs and an outcome.
-- **Parameters and error:** distinguish unknown relationships from variation the model leaves unexplained.
-- **Fitting:** estimate parameters from observed data; the model remains a simplification.
+Think of a **model** as a way to quantify how inputs help determine an outcome we care about.
 
-Today we connect these ideas to simulation and fitting a linear regression.
+**Inference** uses observed data to estimate those relationships. We start with a story about the inputs and outcome, then fit and evaluate the model.
 
-## Marketing Analytics Process
+## Grocery Store | The Outcome
 
-<center>
-![](Figures/process_model.png){width="900px"}
-</center>
-
-## Inferential Modeling Workflow
+A customer enters the grocery store. How much will they purchase?
 
 <center>
-![](Figures/workflow-inference_build-simulate-fit.png){width=900px}
+![](Figures/grocery-model-00.svg){width=840px}
 </center>
 
----
+## Grocery Store | The Inputs
 
-![](Figures/hex_parsnip.png){width=500px}
+What does the household need to buy on this visit?
 
-## The Modeling Workflow Across This Unit
+<center>
+![](Figures/grocery-model-01.svg){width=840px}
+</center>
 
-Our modeling workflow connects analysis to a managerial decision:
+## Grocery Store | The Inputs
 
-- **Consider and build:** tell a story and express it as a model (06); refine the explanatory variables (08).
-- **Preprocess:** prepare variables for the model, including dummy coding (10).
-- **Fit:** estimate unknown parameters from data (06).
-- **Evaluate:** interpret estimates and uncertainty (07), and test predictive fit (09).
-- **Predict:** compare scenarios (07), then apply the same preprocessing to new scenarios (10).
+How much money can the customer spend on groceries?
 
-The workflow is iterative: evidence can send us back to revise the story.
+<center>
+![](Figures/grocery-model-02.svg){width=840px}
+</center>
 
-## Consider | Understanding Customer Spending
+## Grocery Store | The Inputs
 
-A fictional online home-goods retailer wants to understand which customers tend to spend more before planning customer outreach. It has household survey responses linked to customer records.
+How might prices and promotions change what the customer purchases?
 
-- What data would help inform the decision? What would one row represent?
-- What story could explain how household income relates to spending at this retailer?
-- What else might influence customer spending?
+<center>
+![](Figures/grocery-model-03.svg){width=840px}
+</center>
 
-Wrangling and visualization can suggest patterns. A model makes our proposed explanation explicit so we can evaluate it.
+## Grocery Store | The Inputs
 
-## Our Customer Data
+Can the customer find the products they want?
 
-- `home_goods_customers.csv`: 10,000 customers, one row per customer.
-- `HouseholdIncome`: annual household income, in dollars; 200 survey responses are missing.
-- `PreviousSpend`: dollars spent at this retailer over the previous 12 months.
-- `HouseholdSize`: number of people in the household, including the customer.
+<center>
+![](Figures/grocery-model-04.svg){width=840px}
+</center>
 
-These are **semi-synthetic teaching data**, not actual retailer results. Use the accompanying `data_dictionary.md` and `customer-data-README.md` for definitions and attribution. Campaign outcomes cover a later 30-day period; today we use historical spending.
+## Realities of Data
 
-## Build | Turn the Story into a Function
+We almost never have data on all of the inputs that determine an outcome!
 
-Start with an illustrative equation. Let `IncomeThousands` be annual household income divided by 1,000:
+Prices & Promotions? **Easy**.
 
-$$\widehat{\text{PreviousSpend}} = 750 + 3 \times \text{IncomeThousands}$$
+Household needs & Shopping budget? **Much harder**.
 
-- **Input:** annual household income in thousands of dollars. **Output:** predicted previous 12-month spending in dollars.
-- **Intercept:** predicted spending is $750 at zero income; zero is outside our observed income range.
-- **Slope:** another $1,000 of household income is associated with $3 more predicted spending.
+## All Models Are Imperfect
 
-The values 750 and 3 are hypothetical, not fitted estimates. With observed data, we must estimate these numbers.
-
-## Build | Unknown Parameters and Statistical Error
-
-$$\text{PreviousSpend} = \beta_0 + \beta_1 \times \text{IncomeThousands} + \epsilon$$
-
-We observe spending and income. The **parameters** $\beta_0$ and $\beta_1$ are unknown quantities describing the relationship we want to learn.
-
-The **error** $\epsilon$ represents influences on spending that this model does not explicitly explain, such as household needs, preferences, and chance variation.
-
-Two customers with the same income need not spend the same amount. The slope describes an association; it does not show that changing income would cause spending to change. We revisit that distinction in lecture 08.
-
-## All Models Are Wrong (But Some Are Useful)
-
-A model simplifies the true story. Its usefulness depends on the question and whether its assumptions are reasonable.
+Even an imperfect model can help us learn *something* about a process.
 
 <center>
 ![](Figures/models_rockets.png){width=650px}
 </center>
 
-Which details can our customer-spending model leave out, and which would change the recommendation?
+**"I know more than nothing!"**
 
-## Linear Models
+## Build | Ben & Jerry's Spending
 
-Our customer-spending story is an example of a statistical model. A simple linear model looks like this:
+How might the price of Ben & Jerry's relate to how much a customer spends on it during a grocery-store visit?
+
+- **Outcome ($y$):** customer spending on Ben & Jerry's, in dollars.
+- **Input ($x$):** price per pint, in dollars.
+
+An illustrative relationship:
+
+$$\text{CustomerSpend} = 24 - 2 \times \text{Price} + \text{other influences}$$
+
+At a $5 price, expected spending is $14.
+
+## Build | A Linear Model
+
+We can write this spending story more generally:
 
 $$y = \beta_0 + \beta_1 x + \epsilon$$
 
-The equation $y = \beta_0 + \beta_1 x + \epsilon$ is a **linear model** with an error term.
+- $y$: **outcome** (response/dependent variable).
+- $x$: **explanatory variable** (predictor/independent variable).
+- $\beta_0$ and $\beta_1$: **intercept** and **slope** parameters; unknown when we fit a model to observed data.
+- $\epsilon$: unobserved **error**, including household needs, budgets, and chance variation left unexplained by this model.
 
-- $y$ is the **outcome** variable (a.k.a., response or dependent variable).
-- $x$ is an **explanatory** variable (a.k.a., a predictor or independent variable, feature, or covariate).
-- $\beta_0$ is the **intercept** parameter.
-- $\beta_1$ is a **slope** parameter.
-- $\epsilon$ is the *error* term.
+## Notes on $\beta_1$
 
----
+$$y = \beta_0 + \beta_1 x + \epsilon$$
 
-But what kind of *error*?
+Our slope estimate, $\beta_1$, describes an association, **not a causal relationship** (except under very specific circumstances).
 
-If the error includes every other explanatory variable beyond the `X` that we've included in the model, what does the sum of all of their effects look like?
+## Modeling Error
 
-For our simulations and the usual regression inference, we assume independent, normally distributed errors with mean zero and constant variance at each value of $x$:
+Linear regression is a model for a **continuous outcome** (*e.g.*, sales). For this class, assume independent errors with mean zero and constant variance:
 
 $$\epsilon \sim Normal(0, \sigma^2)$$
 
-Here $\sigma$ is the error's standard deviation. It need not equal 1; our simulation below uses $\sigma = 3$.
+- $\sigma$ is the error's standard deviation.
 
----
+## Normal Probability Distribution
 
-The **normal distribution**, and every other **probability distribution**, has a few essential components:
+A **probability distribution** describes how values are distributed, and how relatively likely those values are.
 
-- The **support** are the values on the x-axis that have non-zero probability.
-- The **probability** of some subset of the support is the associated area under the curve.
+- **Support:** the possible values (the full real line for a normal distribution).
+- **Probability** over an interval: the area under the curve in that interval.
 
 <center>
 ![](Figures/distribution_normal.png){width=750px}
 </center>
 
----
+## Uniform Probability Distribution
 
-The normal distribution is one of many *probability distributions*. Here's the **uniform distribution**.
+The **uniform distribution** assigns equal density across its support.
 
-- What is the support?
-- What value in the support is most likely?
+- What is its support?
+- What is the most likely value under this uniform distribution?
 
 <center>
 ![](Figures/distribution_uniform.png){width=750px}
 </center>
 
----
+## Hypothetical Data
 
-Okay, but *why* start with a linear model and normal errors?
+Ben & Jerry's Example: choose $\beta_0 = 24$, $\beta_1 = -2$, and $\sigma = 3$.
 
-- A linear model is a simple starting story: the expected outcome is a sum of contributions from the explanatory variables.
-- Many small influences can sometimes add up to approximately normal error. This is an assumption to evaluate, not a guarantee that omitted variables behave this way.
+$$\text{CustomerSpend} = 24 - 2 \times \text{Price} + \epsilon$$
 
-We use **linear regression** to model a continuous outcome $y$. Normal errors support the usual interval estimates; they are not required just to fit a least-squares line.
+To create 100 hypothetical customer visits, simulate prices uniformly from $3 to $7 per pint, simulate errors, and calculate spending from the equation.
 
-## Simulating Data
-
-We now have outlined a complete model:
-
-$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, \sigma^2)$$
-
-For illustration, let's assume that our model captures the *full* story, *choose* values for the parameters, and generate or **simulate** data using the model. We use generic `x` and `y` for this small demonstration; these are not the customer CSV's generating values.
-
----
-
-How do we simulate data from this?
-
-$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, \sigma^2)$$
-
----
-
-How do we simulate data from this?
-
-$$y = \beta_0 + \beta_1 x + \epsilon, \text{ where } \epsilon \sim Normal(0, \sigma^2)$$
-
-- Choose values for $\beta_0$ and $\beta_1$.
-- Obtain random values for $x$.
-- Obtain random values for $\epsilon$.
-- Add them together!
-
----
-
-Whenever we are using randomization, *for example*, when simulating data or running a model that relies on randomization, we want to use `set.seed()` so we can get the same results every time we render.
-
-```{r}
-# Random number are, well, random.
-rnorm(1)
-rnorm(1)
-rnorm(1)
-```
-
----
-
-```{r}
-# But using set.seed() we at least start at the *same* random number each time.
-set.seed(42)
-rnorm(1)
-
-set.seed(42)
-rnorm(1)
-
-set.seed(42)
-rnorm(1)
-```
-
----
+## Simulate Ben & Jerry's Spending
 
 ```{r message=FALSE, warning=FALSE}
 # Load packages.
@@ -219,133 +156,146 @@ library(tidyverse)
 set.seed(42)
 
 # Set the parameter values.
-beta0 <- 3
-beta1 <- 7
+beta0 <- 24
+beta1 <- -2
 
 # Simulate data.
 sim_data <- tibble(
-  x = runif(100, min = 0, max = 7),
-  y = beta0 + beta1 * x + rnorm(100, mean = 0, sd = 3)
+  Price = runif(100, min = 3, max = 7),
+  CustomerSpend = beta0 + beta1 * Price + rnorm(100, mean = 0, sd = 3)
 )
 ```
 
 ## Plotting Our Simulated Data
 
-```{r}
-sim_data |> 
-  ggplot(aes(x = x, y = y)) +
-  geom_point()
+```{r, fig.height=3.5}
+sim_data |>
+  ggplot(aes(x = Price, y = CustomerSpend)) +
+  geom_point() +
+  labs(x = "Ben & Jerry's price ($ per pint)",
+       y = "Customer spending ($ per visit)")
 ```
 
-## Parameter Estimates
+## A Note on Reproducible Random Draws
 
-Okay, what have we talked about so far?
+`set.seed()` restarts the random-number sequence so the same code produces the same simulated data.
 
-- We use inferential models to understand a process we don't observe.
-- We translate a story about our data into a statistical model.
-- If we have a continuous outcome $y$, a regression is a good model to start with.
+```{r}
+# Successive draws usually differ.
+rnorm(1)
+rnorm(1)
 
-Our goal is to use the model to **estimate** the unobserved parameters from the data (i.e., make our best guess).
+# Restarting from the same seed repeats the draw.
+set.seed(42)
+rnorm(1)
 
-In other words, an inferential model extracts **parameter estimates** from the data to inform our managerial decision.
-
-## Estimating $\beta_0$ and $\beta_1$
-
-<center>
-![](Figures/lm_scatter.png){width=600px}
-</center>
-
-## Finding the Best Line
-
-<center>
-![](Figures/lm_fit_01.png){width=600px}
-</center>
+set.seed(42)
+rnorm(1)
+```
 
 ## Finding the Best Line
 
+Fitting estimates $\beta_0$ and $\beta_1$ from data. Which candidate line fits best, and how should we decide?
+
 <center>
-![](Figures/lm_fit_02.png){width=600px}
+![](Figures/ben-jerrys-candidate-lines.png){width=700px}
 </center>
 
-## Finding the Best Line
+## Residuals
+
+After fitting, a **residual** is $y - \hat{y}$: the observed vertical difference from the fitted line, an estimate of the unobserved error $\epsilon$.
 
 <center>
-![](Figures/lm_fit_03.png){width=600px}
-</center>
-
-## Finding the Best Line
-
-<center>
-![](Figures/lm_SSE_01.png){width=600px}
+![](Figures/ben-jerrys-residuals.png){width=700px}
 </center>
 
 ## Minimizing the Sum of Squared Residuals
 
-The best line should be the one that makes **the sum** of the vertical bars as **small as possible**.
+Residuals can be positive or negative, so adding them directly allows cancellation.
 
-The vertical bars are called **residuals**, and represent the distance between the data $y$ and a particular line. After fitting, a residual is $y - \hat{y}$: an observable estimate of the unobserved error $\epsilon$.
+**Least squares** chooses the intercept and slope that minimize:
 
-Residuals can be positive and negative, so we make the sum of the **squared residuals** as small as possible.
+$$\sum_{i=1}^{n}(y_i - \hat{y}_i)^2$$
 
-## Minimizing the Sum of Squared Residuals
+Squaring prevents cancellation and gives larger misses more weight.
 
-<center>
-![](Figures/lm_SSE_02.png){width=600px}
-</center>
+Ben & Jerry's Example: minimize the squared differences between **actual** sales $y_i$ and **predicted** sales $\hat{y}_i$.
 
 ## Using tidymodels
 
-The **tidymodels** framework is a collection of packages for modeling using tidyverse principles. The goal is to provide the same consistency and ease-of-use for modeling that the tidyverse provides for importing, wrangling, visualizing, and reporting data.
+**tidymodels** provides consistent modeling syntax. Specify the **model type** with `linear_reg()` and the **engine** (the implementation) with `set_engine("lm")`.
 
-```{r}
-# Load packages.
+```{r, message=FALSE}
 library(tidymodels)
 ```
 
-## Wait...We Used the Tidyverse...Now We Have to Learn Tidymodels?
-
-Yes! But you'll notice that the way we write code stays remarkably consistent.
-
-## Specify the Model Type and Engine
-
-In the tidymodels framework, we specify the model **type** and then set the **engine** we'd like to estimate the model with. The engine is typically another R package that would normally require its own unique syntax.
-
-This allows us to use a variety of modeling packages while keeping the same syntax.
-
 ```{r}
-# Specify the model type and engine.
 reg_model <- linear_reg() |> 
   set_engine("lm")
 ```
 
----
+## Modeling Hypothetical Data
 
-<center>
-![](Figures/monsters_parsnip.png){width=900px}
-</center>
+We chose the **exact** story behind how customer sales are determined in our hypothetical data.
+
+So what results should we see from our model?
 
 ## Fit the Model
 
-When we **fit** a linear model (a.k.a., training, calibrating, or estimating the model) we are finding the line of best fit and getting parameter estimates.
-
-To do this the `fit()` function uses **formula** notation where the model is specified with `outcome ~ explanatory variable(s)`.
+`fit()` uses **formula notation**: `outcome ~ explanatory variable`. 
 
 ```{r}
-# Fit the model.
-(reg_model <- reg_model |>
-  fit(y ~ x, data = sim_data))
+reg_model <- reg_model |>
+  fit(CustomerSpend ~ Price, data = sim_data)
 ```
 
-## View Model Results
+## Inspect the Model
+
+`tidy()` returns a table of **parameter estimates**.
 
 ```{r}
 reg_model |>
   tidy()
 ```
 
+How close are the estimates to our chosen values, 24 and -2? Why might they differ? Interpret the slope in dollars.
+
+## Questions?
+
+## Let's Step Things Up!
+
+## Consider | Understanding Customer Spending
+
+A fictional online home-goods retailer wants to understand which customers tend to spend more before planning targeting campaigns. It has household survey responses linked to customer records.
+
+- How could household income relate to spending at this retailer?
+- What else might influence customer spending?
+
+Remember: a model simplifies the full story. Its usefulness depends on the question and whether its assumptions are reasonable.
+
+## Our Customer Data
+
+- `home_goods_customers.csv`: 10,000 customers, one row per customer.
+- `HouseholdIncome`: annual household income, in dollars.
+- `PreviousSpend`: dollars spent at this retailer over the previous 12 months.
+- `HouseholdSize`: number of people in the household, including the customer.
+
+Reference the accompanying `data_dictionary.pdf` for definitions.
+
+## Build : Turn the Story into a (Hypothetical) Model
+
+Start with an illustrative equation. Let `IncomeThousands` be annual household income divided by 1,000:
+
+$$\widehat{\text{PreviousSpend}} = 750 + 3 \times \text{IncomeThousands}$$
+
+- **Input:** annual household income in thousands of dollars. 
+- **Output:** predicted previous 12-month spending in dollars.
+- **Intercept:** predicted spending is $750 at zero income; zero is outside our observed income range.
+- **Slope:** another $1,000 of household income is associated with $3 more predicted spending.
+
 ## From Simulation to Customer Data
 
-Keep `home_goods_customers.csv` in the same working folder as your starter document. Read its dictionary before interpreting the variables.
+Let's analyze some actual data!
 
 ```{r}
 customers <- read_csv("home_goods_customers.csv", show_col_types = FALSE)
@@ -355,11 +305,21 @@ customer_model_data <- customers |>
   mutate(IncomeThousands = HouseholdIncome / 1000)
 ```
 
-This leaves 9,800 customers with observed income and spending. Missing income is not zero income. We omit those 200 customers for today's model; missing-data strategies come later.
+This leaves 9,800 customers with observed income and spending.
 
 ## Plotting Customer Spending
 
-```{r, fig.height=3.5}
+```{r, eval=FALSE}
+customer_model_data |>
+  ggplot(aes(x = IncomeThousands, y = PreviousSpend)) +
+  geom_point(alpha = 0.15) +
+  labs(x = "Annual household income ($1,000s)",
+       y = "Previous 12-month spending ($)")
+```
+
+## Plotting Customer Spending
+
+```{r, fig.height=3.5, echo=FALSE}
 customer_model_data |>
   ggplot(aes(x = IncomeThousands, y = PreviousSpend)) +
   geom_point(alpha = 0.15) +
@@ -390,9 +350,10 @@ $$\widehat{\text{PreviousSpend}} = 760.42 + 2.57 \times \text{IncomeThousands}$$
 
 - Another $1,000 of annual household income is associated with about $2.57 more spending at this retailer over 12 months.
 - The intercept is a prediction at zero income, outside the observed range of $15,000 to $350,000.
-- Individual customers differ from their fitted values; these differences are residuals.
 
-This association alone does not tell the retailer which outreach would increase spending.
+Having a higher income does **not cause** a customer to spend more.
+
+Having a higher income *is associated with* higher spending.
 
 ## More Than One Explanatory Variable
 
@@ -400,29 +361,21 @@ The same model can include a second explanatory variable:
 
 $$y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \epsilon$$
 
-In `fit()`, the formula becomes `y ~ x1 + x2`. The outcome is on the left; explanatory variables are on the right.
+In `fit()`, the formula becomes `y ~ x1 + x2`.
 
-Each slope describes a one-unit difference in its variable **holding the other included variable fixed**. It is still an association unless we have a basis for a causal interpretation.
-
-The exercise applies this idea to two customer characteristics. We examine explanatory-variable choices more closely in lecture 08.
+Each slope describes a one-unit difference in its variable **holding the other included variable fixed**. The slope coefficients are still associations!
 
 ## Live Coding Exercise
 
-The home-goods retailer's leadership wants a simple hypothetical demonstration of how a model can help them understand customer spending. What would make the demonstration convincing and useful?
+The home-goods retailer's leadership wants an additional analysis of how customer incomes and ages are related to past spending.
 
-- What customer story should we explore, and what do its terms mean?
-- What assumptions would make the example plausible?
-- How could we tell whether our analysis recovers the story we chose?
-- What would this demonstration leave unanswered about actual customers?
+What could the relationship between age and spending look like?
+
+Let's answer this question with a model.
 
 ## Wrapping Up
 
-*Summary*
-
-- Discussed linear models.
-- Walked through parameter estimation for a linear model.
-- Introduced tidymodels to fit models.
-- Connected the retailer's customer-spending question to a story, unknown parameters, and statistical error.
+Today we simulated a known relationship, estimated it from data, and applied the same modeling approach to customer spending.
 
 *Next Time*
 

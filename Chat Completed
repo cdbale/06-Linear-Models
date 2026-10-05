@@ -124,3 +124,381 @@ Verification notes (2026-09-28):
 - Old Word solution preserved in the course-root QA folder, outside this lecture
   repository. No slide render, Canvas write, commit, push, or soup-data removal.
 - User explicitly kept all other checklist entries pending.
+
+
+2026-10-05 - AUTHORIZED CONDENSATION REVIEW
+The user explicitly requested removing unnecessary complexity and redundancies
+while retaining all core concepts. Entries 11-16 implement that request; they
+are approved by this request. Prior pending entries 5-10 retain their decisions.
+Slide numbers below refer to the 47-slide source before condensation, including
+its title slide. Repository root verified; initial working tree clean at 3d33555.
+
+11. Consolidate the lecture opening.
+Location: slides 3-7, Key Concepts | From Story to Model, Marketing Analytics
+Process, Inferential Modeling Workflow, untitled parsnip artwork, and The
+Modeling Workflow Across This Unit.
+Evidence: five consecutive slides introduce the process, repeat the workflow,
+and supply a decorative transition before the customer question.
+Change: retain one inference-workflow slide, its diagram, and concise explanation
+of inference, today's build/simulate/fit focus, and later evaluation/prediction.
+Effects: moves the customer question earlier; no change to learning goals.
+Decision: Approve - explicit redundancy-removal request.
+Status: Verified.
+
+12. Consolidate model definitions and error assumptions.
+Location: slides 11-17, Build | Unknown Parameters and Statistical Error,
+All Models Are Wrong (But Some Are Useful), Linear Models, and four untitled
+error/distribution slides.
+Evidence: two slides repeat the model equation and definitions; the error setup
+and rationale for linear models are separated by another explanation. The
+simplification point has its own artwork slide.
+Change: define outcome, explanatory variable, intercept, slope, and error once;
+retain the simplification/assumptions point in the customer story; combine the
+normal-error assumptions and linear-model rationale. Retain the normal and
+uniform examples, support, probability area, and inference caveat.
+Effects: preserves the same concepts before simulation; no conceptual emphasis
+change intended. Do not treat omitted variables as guaranteed normal noise.
+Decision: Approve - explicit redundancy-removal request.
+Status: Verified.
+
+13. Shorten simulation and reproducibility.
+Location: slides 18-23, Simulating Data and five following untitled slides.
+Evidence: the full equation appears on three consecutive slides; How do we
+simulate data from this? appears twice; the same seeded draw is shown three times.
+Change: one simulation plan; one concise seed demonstration with two matching
+draws; retain the complete simulation code and plotting opportunity.
+Effects: corresponding seed-code change in starter; preserve its approved
+simulated-data scatterplot TODO and parameter values.
+Decision: Approve - explicit redundancy-removal request.
+Status: Verified.
+
+14. Consolidate the least-squares illustration.
+Location: slides 25-32, Parameter Estimates, Estimating beta0 and beta1, four
+Finding the Best Line slides, and two Minimizing the Sum of Squared Residuals.
+Evidence: a recap restates the opening; four candidate/residual plots appear
+separately; the residual illustration appears again in annotated form.
+Change: use the existing combined candidate-line image lm_fit_04.png; define
+residuals beside the annotated lm_SSE_02.png; state the squared-residual objective
+on a separate concise least-squares slide. Retain observed residual versus
+unobserved error and the reason for squaring.
+Effects: keeps the visual explanation without repeated candidate-line slides.
+Decision: Approve - explicit redundancy-removal request.
+Status: Verified.
+
+15. Simplify tidymodels introduction and simulated fitting.
+Location: slides 33-38, Using tidymodels, Wait...We Used the Tidyverse...Now We
+Have to Learn Tidymodels?, Specify the Model Type and Engine, untitled artwork,
+Fit the Model, and View Model Results.
+Evidence: several transitions repeat the promise of consistent syntax; fitting
+and inspecting one model are split across two short slides.
+Change: combine package/type/engine explanation with specification code; put
+simulated fit and tidy output on one slide, explaining formula and estimates.
+Effects: mirror fit/tidy chunk grouping and remove redundant starter model-object
+print; leave new modeling concepts fully implemented for students.
+Decision: Approve - explicit redundancy-removal request.
+Status: Verified.
+
+16. Tighten applied explanation and closing recap.
+Location: slides 39-47, customer example through concluding Exercise 5.
+Evidence: some parameter/residual/association definitions are repeated after
+the customer model; wrapping-up bullets repeat learning goals.
+Change: retain the applied import, missingness/scaling, plot, fit, and actual
+slope/intercept interpretation; shorten repeated commentary and closing recap.
+Preserve the multiple-predictor formula/partial-slope meaning, open-ended live
+coding, and the two final exercise slides with their deliverables unchanged.
+Effects: preserves exercise/solution/rubric alignment; no separate solution edit.
+Decision: Approve - explicit redundancy-removal request.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Reduced source slide count from 47 to 28 (19 fewer; about 40%). Count includes
+  the title slide and follows explicit Markdown slide boundaries, without render.
+- Core-concept map in the final source:
+  3 inference and iterative workflow; 4 useful simplification/assumptions;
+  5 customer observation, variables, units, and teaching-data provenance;
+  6 hypothetical intercept/slope/input/output; 7 unknown parameters and error;
+  8 continuous outcome, normal error, independence, constant variance, sigma,
+  and the distinction between fitting and normal-error inference;
+  9-10 probability support/area plus normal and uniform examples;
+  11-14 known-parameter simulation, recovery, reproducible seeds, and plotting;
+  15-17 parameter estimation, candidate lines, residual versus unobserved error,
+  and minimizing squared residuals;
+  18-19 tidymodels, model type/engine, formula, fit, and tidy estimates;
+  20-23 applied income/spending model, missingness, scaling, sample size,
+  slope/intercept units, extrapolation, and association/causation limits;
+  24 multiple predictors and holding the other included predictor fixed;
+  25 open-ended live coding; 27-28 concluding Exercise 5.
+- Existing combined line image and annotated residual image inspected read-only.
+  No asset edits or deletions. All remaining slide headings unique.
+- Exercise 5 instructions/deliverables are byte-for-byte unchanged, as are the
+  separate solution/rubric artifacts. No downstream assignment change required.
+- Starter matches updated seed demonstration and combined specification/fitting
+  code. Approved scatterplot TODO remains intact; customer plot remains complete.
+- Source/diff and git diff --check inspected. Eight slide code chunks parse;
+  nine starter chunks and four existing solution chunks execute with the
+  task-local R library. Customer sample count and coefficients remain verified.
+- Verification used course-root tmp/lecture06-review-qa/verify-approved.R.
+  Before snapshots are in tmp/lecture06-condensation for review/recovery.
+- Entries 11-16 complete. Prior pending entries 5-10 retain their decisions.
+  No slides rendered, Canvas fields changed, commits made, or GitHub submission.
+
+2026-10-05 - Grocery-store model illustration
+
+17. Add a grocery-store model illustration and reframe the opening.
+Location: Inferential Modeling Workflow opening slide (source slide 3), followed
+by five new Grocery Store slides before Consider | Understanding Customer Spending.
+Evidence: Cam replaced the workflow picture with a question about the term
+process and requested an outcome circle with four input circles revealed one
+per additional slide.
+Change: describe a model as quantifying how inputs help determine an outcome;
+add a fixed-layout vector sequence beginning with Customer purchases ($ spent
+on this visit), then Household needs, Shopping budget, Prices & promotions,
+and Product availability. Every visible input arrow points into the outcome.
+Effects: creates five SVG assets in Figures; preserves the existing home-goods
+example, regression code, live coding, and concluding exercise. No starter
+code change needed. This new introductory sequence intentionally reveals
+successive parts of one diagram; it is not a repeated explanation.
+Decision: Approve - explicitly requested by Cam.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Opening source slide 3 now Models Quantify Inputs and Outcomes. New slides
+  4-8: Grocery Store | The Outcome; Household Needs; Shopping Budget;
+  Prices and Promotions; Product Availability.
+- Five SVG assets: Figures/grocery-model-00.svg through grocery-model-04.svg.
+  Circles and arrows checked: 1/0, 2/1, 3/2, 4/3, 5/4 respectively. Central
+  outcome markup identical across all stages. New inputs accumulate in order.
+- Vector construction keeps geometry, labels, and inward arrowheads fixed;
+  no image-generation model used for these simple circles and arrows.
+- Diagrams rasterized for visual QA only; first and final stages inspected.
+  Asset labels and arrow geometry validated for all intermediate stages.
+- Downstream source from Consider | Understanding Customer Spending through
+  the concluding exercise is unchanged after line-ending normalization.
+- Source/diff checks passed. Starter code unchanged because no R code changed.
+  Existing user changes, including generated HTML, preserved; no slide rendering,
+  Canvas edit, commit, push, or other pending checklist action performed.
+2026-10-05 - Imperfect models rocket illustration
+
+18. Restore the rocket illustration after Realities of Data.
+Location: new All Models Are Imperfect slide immediately after Realities of
+Data (source slide 9), before Consider | Understanding Customer Spending.
+Evidence: Cam requested the existing rocket pictures to explain that all
+models are imperfect but can still teach us something about a process.
+Change: restore Figures/models_rockets.png with a concise explanation and
+the line "I know more than nothing!"
+Effects: slide source only; no code or starter-code changes required.
+Decision: Approve - explicitly requested by Cam.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Source slide 10 is All Models Are Imperfect, immediately after Realities
+  of Data and before Consider | Understanding Customer Spending.
+- Existing rocket image inspected and referenced exactly once at 650px wide.
+- Slide states that an imperfect model can teach us something about a process
+  and closes with "I know more than nothing!"
+- Source order, asset path, and scoped whitespace checks passed. User's data
+  realities slide and other existing edits preserved. No slides rendered.
+
+2026-10-05 - Simulation before customer data
+
+19. Reorder the lesson to teach simulation before customer data.
+Location: after All Models Are Imperfect (source slide 10); simulation through
+Fit and Inspect the Model, then the customer-data story and applied model.
+Evidence: Cam requested the simulated example immediately after the rocket
+slide, followed by the actual data; customer context currently precedes both.
+Change: move the customer story, dictionary overview, and illustrative spending
+equation together after the simulated fit. Introduce the linear model using
+generic x and y so the simulation section stands on its own.
+Effects: preserve all concepts and slides; verify source/starter code order.
+Decision: Approve - explicitly requested by Cam.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- All Models Are Imperfect remains slide 10. Generic linear-model explanation,
+  error/distributions, simulation, least squares, and simulated fit are slides
+  11-23. Customer context, dictionary overview, illustrative equation, data
+  preparation, plotting, fit, and interpretation follow on slides 24-30.
+- All 35 slides retained with unique headings. Moved customer-slide text is
+  unchanged; only the generic linear-model explanation and wrap-up wording
+  were adapted for the new sequence. Exercise remains the concluding activity.
+- All R chunks and their order are unchanged. Starter already follows the
+  simulation-then-customer sequence and requires no edit; file hash unchanged.
+- Source and scoped preservation checks passed; no new trailing whitespace.
+  Existing rendered HTML unchanged. No render, Canvas edit, or publication.
+
+2026-10-05 - Rocket image syntax fix
+
+20. Fix the missing rocket picture.
+Location: All Models Are Imperfect (source slide 10).
+Evidence: the PNG exists, but the generated slide's center container is empty.
+Pandoc classifies the descriptive Markdown image text as a captioned Figure;
+the other working slide images use an empty caption and parse as Image nodes.
+Change: use the same empty-caption image syntax as the working slide images.
+Effects: preserve image, width, wording, slide order, and all other materials.
+Decision: Approve - requested by Cam's report that the image does not display.
+Status: Verified - source fix; displayed HTML requires a fresh knit.
+
+Verification notes (2026-10-05):
+- Only the descriptive Markdown caption was removed. PNG and 650px width,
+  the learning message, quote, and slide placement are unchanged.
+- Isolated Pandoc parser check confirms an Image node instead of Figure.
+  The format matches the working images already in the generated deck.
+- Full source compared before/after; no other source changes. Current user
+  edits, including the Grocery Store | The Inputs headings, are preserved.
+- Existing generated HTML inspected read-only; no slide render performed.
+  Regeneration remains under the pending render item 9.
+
+2026-10-05 - Ben & Jerry's simulation example
+
+21. Ground the simulated example in Ben & Jerry's spending and price.
+Location: immediately after All Models Are Imperfect (source slide 10),
+then Build | A Linear Model through Fit and Inspect the Model.
+Evidence: Cam requested customer spend as y and price as x, a concrete grocery
+example before Greek notation, and a return to that example for simulation.
+Change: add an illustrative spending/price equation, introduce its general
+notation, and use named Price and CustomerSpend variables throughout simulation,
+plotting, fitting, and the corresponding starter code. Update the fitting and
+residual illustrations to use the same simulated data and units.
+Effects: one new introductory slide; preserve every existing core concept,
+starter TODOs, customer-data application, live coding, and concluding exercise.
+Decision: Approve - explicitly requested by Cam.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- New source slide 11: Build | Ben & Jerry's Spending. It defines y as dollars
+  spent on Ben & Jerry's during a visit and x as dollars per pint, then shows
+  CustomerSpend = 24 - 2 * Price + other influences. A $5 price gives expected
+  spending of $14; all values explicitly hypothetical.
+- Slide 12 introduces general Greek notation. Slides 16 and 18 return to the
+  Ben & Jerry's example; simulation uses 100 visits, Price uniform from $3-$7,
+  intercept 24, slope -2, and normal error with SD $3. Named variables and units
+  carried into the plot, formula, coefficient discussion, and starter code.
+- New candidate-line and residual PNGs use ten of the same simulated visits,
+  with a line fitted to all 100. Axes, legends, residual signs, observed/fitted
+  labels, and image bounds visually inspected. Original images preserved.
+- All 8 slide and 9 starter R chunks parsed and executed successfully using
+  verify-ben-jerrys.R in course-root tmp/lecture06-review-qa. Slide/starter
+  simulation identical; tidymodels and base R fitted coefficients agree:
+  intercept 22.258183, Price slope -1.673201. Customer fit remains 760.42/2.57.
+- Starter scatterplot TODO remains unfilled. All 35 earlier slides retained;
+  total is now 36. Opening user edits, customer application, live coding, and
+  concluding exercise verified unchanged. No new trailing whitespace.
+- Existing generated HTML and exercise solution hashes unchanged. No slides
+  knitted, Canvas changes made, or publication performed.
+
+2026-10-05 - Data dictionary PDF
+
+22. Convert the data dictionary from Markdown to PDF.
+Location: data_dictionary.md; PDF copy in output/pdf/data_dictionary.pdf.
+Evidence: Cam requested a PDF version of the current data dictionary.
+Change: preserve all 17 variable definitions, units, timing notes, and emphasis
+in a readable reference sheet. Keep the editable Markdown source.
+Effects: create PDF only; verify extracted content and visually inspect pages.
+Decision: Approve - explicitly requested by Cam.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Created output/pdf/data_dictionary.pdf: one US Letter landscape page.
+- All 17 variables, complete definitions, values/units, introduction, timing
+  notes, and emphasis preserved. Every table cell and both prose paragraphs
+  compared with extracted PDF text; original Markdown hash unchanged.
+- PDF rasterized with Poppler and inspected. Table rows, long field names,
+  wrapped text, headers, notes, and page number are legible without clipping.
+- Editable Markdown retained. No slide, starter, dataset, or Canvas changes.
+
+2026-10-05 - Starter consistency review
+
+23. Align starter code with Cam's updated slides.
+Location: 06-starter-code.qmd, simulation through live coding; authoritative
+06 Linear Models.Rmd source, Simulate Ben & Jerry's Spending through Live Coding.
+Evidence: simulation and customer code match, but the starter's random-draw
+section precedes simulation, fit/inspect steps are combined, the dictionary
+reference remains Markdown, and the live-coding prompt uses the older scenario.
+Change: follow the slide sequence and fit/inspect structure, reference the PDF,
+and match the new income-and-age live-coding question. Preserve student gaps.
+Effects: starter only; slides and other materials remain unchanged.
+Decision: Approve - Cam requested review to ensure starter/slide consistency.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Starter now follows Simulate Ben & Jerry's Spending, Plotting Our Simulated
+  Data, A Note on Reproducible Random Draws, Using tidymodels, Modeling
+  Hypothetical Data, Fit the Model, and Inspect the Model in the slide order.
+- Package loading, model specification, fitting, and inspection use the same
+  separate chunks as the slides. Plot heights match. Customer plot included
+  once; slides separately display its code and output.
+- Dictionary reference changed to the existing lecture-root data_dictionary.pdf.
+  Live-coding scenario matches the slide's income-and-age analysis verbatim,
+  with its empty chunk retained. Scatterplot TODO remains unfilled.
+- All 11 chunks in each source parse. Every completed starter chunk matches
+  the evaluated slide code in order, excluding the intentional scatterplot gap.
+  Both sources executed without knitting: simulated data, prepared customer
+  data, and fitted coefficients identical. Simulated fit 22.258183/-1.673201;
+  customer model remains 9,800 rows and coefficients 760.42/2.57. Age available.
+- Checks used course-root tmp/lecture06-review-qa/audit-starter-current.R.
+  Scoped whitespace checks passed; slide source and HTML hashes unchanged.
+  No slides, exercise, data, Canvas fields, or publication changed.
+
+2026-10-05 - Exercise 5 Canvas instructions and rubric note
+
+5. Post the exercise instructions to Canvas (skill checklist 5).
+Location: Fall 2026 MKTG 411 course 38688, sections 001 (40948) and 002 (40947),
+Exercise 5 assignment 1452129.
+Evidence: description is blank. Verified through paginated API inventory.
+Proposal: post finalized exercise text from the slides, preserving settings.
+Effects: should match 2a and approved solution 2b.
+Decision: Approve - explicitly requested by Cam on 2026-10-05.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Current slide exercise instructions match Exercise 5 Solution.qmd and the
+  existing Word solution. Rubric covers the same deliverables: setup/data 1,
+  model 2, interpretation 2. No local instructions or solution edits needed.
+- All four solution R chunks executed; 9,800 complete observations and model
+  coefficients 648.567, 2.522, 46.851 match the solution and interpretations.
+- Canvas connection checked, paginated course/assignment listings read, and
+  course 38688 confirmed as 2026 Fall with sections 001 and 002.
+- Full exercise and client-report instructions posted to assignment 1452129.
+  Fresh GET confirms all HTML content matches, allowing Canvas's automatically
+  added course-formatting tags. Points, dates, submission settings, and other
+  assignment settings preserved. Assignment remains unpublished.
+- Saved snapshots and checks in course-root tmp/lecture06-canvas-exercise.
+
+6. Add Canvas rubric note (skill checklist 6).
+Location: Grade Exercise 5 assignment 1452147 in course 38688.
+Evidence: asks students to grade/comment on their submission but has no rubric
+location note. The local Exercise 5 solution now contains the aligned rubric
+(item 2b verified); this Canvas edit remains pending.
+Proposal: after 2b, append a note that the rubric is in the exercise solution.
+Effects: depends on aligned solution, preserves all current grading instructions.
+Decision: Approve - explicitly requested by Cam on 2026-10-05.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Added: "The grading rubric is in the Exercise 5 solution."
+- Fresh GET of Grade Exercise 5 (1452147) confirms the note appears once.
+  Removing only that paragraph reproduces the prior description exactly,
+  including the submission instructions and course-formatting tags.
+- Points, due date, submission settings, and other assignment settings
+  preserved. Assignment remains unpublished.
+
+2026-10-05 - Lecture 06 cleanup
+
+10. Retire stale local soup data and README title.
+Location: soup_data.csv and README.md (currently '# 09-Linear-Models').
+Evidence: local soup copy remains although the user has replaced the data;
+readme still uses an older lecture number.
+Proposal: remove the obsolete local soup CSV after solution migration (2b), and
+update README to identify Lecture 06, current source/starter/data, and render
+status. Do not remove unrelated or archived Canvas files.
+Effects: solution migration (2b) is now verified; cleanup remains pending.
+Decision: Approve - explicitly requested by Cam on 2026-10-05.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Removed only the obsolete local soup_data.csv after the migrated solution
+  was verified. Current slide, starter, and solution sources do not reference it.
+- README now identifies Lecture 06, current source, rendered slides, starter,
+  customer data, dictionary, attribution, solution, and manual render workflow.
+- No unrelated or archived Canvas files were removed.
+

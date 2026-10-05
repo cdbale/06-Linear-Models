@@ -6,97 +6,96 @@ editor: visual
 
 This file contains the code for Lecture 06: Linear Models.
 
-Keep `home_goods_customers.csv` in your working folder. Read `data_dictionary.md`
-and `customer-data-README.md` for the case definitions and attribution. The data
-describe 10,000 customers of a fictional home-goods retailer and are semi-synthetic.
+Keep `home_goods_customers.csv` in your working folder. Read `data_dictionary.pdf` and `customer-data-README.md` for the case definitions and attribution. The data describe 10,000 customers of a fictional home-goods retailer and are semi-synthetic.
 
-## A Note on Randomization
+## Simulate Ben & Jerry's Spending
 
-```{r}
-# Random number are, well, random.
-# if you run this chunk a few times, you'll see that the output is different
-# each time, and it's different from what Dr. Bale's slides show as well
-rnorm(1)
-rnorm(1)
-rnorm(1)
-```
-
-```{r}
-# But using set.seed() we at least start at the *same* random number each time.
-set.seed(42)
-rnorm(1)
-
-set.seed(42)
-rnorm(1)
-
-set.seed(42)
-rnorm(1)
-```
-
-## Simulate Data
-
-Whenever we design a statistical model, it is possible to simulate data from this model. In other words, we can pretend that our model captures the true "story" of how data is generated, and use that model to generate data. The generic `x` and `y` example below is separate from the customer CSV; its parameter values are not the customer dataset's generating values.
+Our grocery-store example relates customer spending on Ben & Jerry's during a visit (`CustomerSpend`, dollars) to the price per pint (`Price`, dollars). We choose the hypothetical relationship `CustomerSpend = 24 - 2 * Price + error`, then simulate data to see whether fitting can recover the intercept and slope. This example is separate from the home-goods customer CSV; these are not its generating values.
 
 ```{r}
 # Load packages.
 library(tidyverse)
 
-## set a random seed so that our simulation is consistent
+# Set the randomization seed to simulate the same data each time.
 set.seed(42)
 
 # Set the parameter values.
-beta0 <- 3
-beta1 <- 7
+beta0 <- 24
+beta1 <- -2
 
 # Simulate data.
 sim_data <- tibble(
-  x = runif(100, min = 0, max = 7),
-  y = beta0 + beta1 * x + rnorm(100, mean = 0, sd = 3)
+  Price = runif(100, min = 3, max = 7),
+  CustomerSpend = beta0 + beta1 * Price + rnorm(100, mean = 0, sd = 3)
 )
 ```
 
-We can also plot the simulated data.
+## Plotting Our Simulated Data
 
-```{r}
-# TODO: Make a scatterplot showing the relationship between x and y in sim_data.
+```{r, fig.height=3.5}
+# TODO: Make a scatterplot of CustomerSpend versus Price in sim_data, with labeled units.
 # How does the pattern change when you change the simulation above?
 ```
 
-Load the `tidymodels` package.
+## A Note on Reproducible Random Draws
+
+`set.seed()` restarts the random-number sequence so the same code produces the same simulated data.
 
 ```{r}
+# Successive draws usually differ.
+rnorm(1)
+rnorm(1)
+
+# Restarting from the same seed repeats the draw.
+set.seed(42)
+rnorm(1)
+
+set.seed(42)
+rnorm(1)
+```
+
+## Using tidymodels
+
+Specify the **model type** with `linear_reg()` and the **engine** (the implementation) with `set_engine("lm")`.
+
+```{r, message=FALSE}
 library(tidymodels)
 ```
 
-To define a regression model, we just need two things: the **model type** and how the model will be estimated (the **engine**).
-
 ```{r}
-# Specify the model type and engine.
 reg_model <- linear_reg() |> 
   set_engine("lm")
 ```
 
-```{r}
-# what is this reg_model object?
-reg_model
-```
+## Modeling Hypothetical Data
+
+We chose the **exact** story behind how customer sales are determined in our hypothetical data.
+
+So what results should we see from our model?
+
+## Fit the Model
+
+`fit()` uses the formula `outcome ~ explanatory variable`.
 
 ```{r}
-# we can fit our model to our data
-(reg_model <- reg_model |>
-  fit(y ~ x, data = sim_data))
+reg_model <- reg_model |>
+  fit(CustomerSpend ~ Price, data = sim_data)
 ```
 
+## Inspect the Model
+
+`tidy()` returns a table of parameter estimates.
+
 ```{r}
-# view a tabulated version of the model results
 reg_model |>
   tidy()
 ```
 
+How close are the estimates to our chosen values, 24 and -2? Why might they differ? Interpret the slope in dollars of customer spending per \$1 of price per pint.
+
 ## From Simulation to Customer Data
 
-`HouseholdIncome` measures annual household income in dollars. `PreviousSpend`
-measures spending at this retailer over the previous 12 months.
+`HouseholdIncome` measures annual household income in dollars. `PreviousSpend` measures spending at this retailer over the previous 12 months.
 
 ```{r}
 customers <- read_csv("home_goods_customers.csv", show_col_types = FALSE)
@@ -106,12 +105,11 @@ customer_model_data <- customers |>
   mutate(IncomeThousands = HouseholdIncome / 1000)
 ```
 
-This leaves 9,800 customers. The 200 missing incomes are not zero incomes;
-today's model omits those customers.
+This leaves 9,800 customers. The 200 missing incomes are not zero incomes; today's model omits those customers.
 
 ## Plotting Customer Spending
 
-```{r}
+```{r, fig.height=3.5}
 customer_model_data |>
   ggplot(aes(x = IncomeThousands, y = PreviousSpend)) +
   geom_point(alpha = 0.15) +
@@ -130,26 +128,19 @@ customer_model |>
   tidy()
 ```
 
-Focus on the `estimate` column. Interpret the slope in dollars of previous
-12-month spending per $1,000 of annual household income. It describes an
-association, not an established causal effect. The intercept is a prediction at
-zero income, outside the observed range of $15,000 to $350,000.
+Focus on the `estimate` column. Interpret the slope in dollars of previous 12-month spending per \$1,000 of annual household income. It describes an association, not an established causal effect. The intercept is a prediction at zero income, outside the observed range of \$15,000 to \$350,000.
 
 ## More Than One Explanatory Variable
 
-The formula `y ~ x1 + x2` includes two explanatory variables. Each slope describes
-a one-unit difference in its variable, holding the other included variable fixed.
+The formula `y ~ x1 + x2` includes two explanatory variables. Each slope describes a one-unit difference in its variable, holding the other included variable fixed. The slope coefficients are still associations.
 
 ## Live Coding Exercise
 
-The home-goods retailer's leadership wants a simple hypothetical demonstration
-of how a model can help them understand customer spending. What would make the
-demonstration convincing and useful?
+The home-goods retailer's leadership wants an additional analysis of how customer incomes and ages are related to past spending.
 
-- What customer story should we explore, and what do its terms mean?
-- What assumptions would make the example plausible?
-- How could we tell whether our analysis recovers the story we chose?
-- What would this demonstration leave unanswered about actual customers?
+What could the relationship between age and spending look like?
+
+Let's answer this question with a model.
 
 ```{r}
 

@@ -11,7 +11,7 @@ execute:
 
 ## Customer Spending
 
-The retailer wants to understand how past spending differs with household income and size before planning outreach. This solution includes the model and five-point rubric. Both slopes are positive; neither establishes a causal outreach effect.
+The retailer wants to understand how past spending differs with household income and size before planning outreach. This solution includes the model and five-point rubric.
 
 ## Exercise Instructions
 
@@ -48,8 +48,6 @@ customers <- read_csv(
 )
 ```
 
-These semi-synthetic teaching data describe a fictional retailer. The dictionary and `customer-data-README.md` provide the definitions, context, and attribution.
-
 ## Prepare the Model Data
 
 Income is recorded in annual dollars; dividing by 1,000 makes its slope easier to interpret. Missing survey responses are not zero values.
@@ -62,7 +60,7 @@ customer_model_data <- customers |>
 nrow(customer_model_data)
 ```
 
-The model includes **9,800 customers**. The other 200 customers have missing income. Missing values in variables outside this model, such as home size, do not require excluding additional customers here.
+The model includes **9,800 customers**. The other 200 customers have missing income.
 
 ## Model Estimation
 
@@ -81,13 +79,12 @@ spending_model <- linear_reg() |>
 
 ## Model Results
 
-Display the coefficient estimates. The lecture focuses on these estimates; inference about their uncertainty follows in the next lecture.
+Display the coefficient estimates.
 
 ```{r}
 spending_model |>
   tidy() |>
-  select(term, estimate) |>
-  knitr::kable(digits = 3, col.names = c("Term", "Estimate"))
+  select(term, estimate)
 ```
 
 ## Interpretation for the Retailer
@@ -96,4 +93,4 @@ spending_model |>
 - **Household size:** holding annual household income fixed, one additional household member is associated with about **\$46.85 more spending** over the previous 12 months.
 - **Intercept:** the fitted value is about \$648.57 when both income and household size are zero. Neither zero is in its observed range, so this is not a meaningful customer profile in these data.
 
-Customers with higher income and larger households tend to have higher past spending in this model. That can inform a description of customer profiles, but it does not establish which outreach would increase spending. These characteristics were not randomly assigned, other influences may explain part of the associations, and historical spending is not an outcome of the later email campaign.
+Customers with higher income and larger households tend to have higher past spending in this model. That can inform a description of customer profiles, but it does not establish which outreach would increase spending. These characteristics were not randomly assigned, other influences may explain part of the associations.
