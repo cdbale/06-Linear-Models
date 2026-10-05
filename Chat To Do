@@ -13,7 +13,7 @@ Data, 05 Tidy Data and Types. No rendering authorized.
 
 AUTHORIZED CHANGES VERIFIED - moved to Chat Completed
 
-AUTHORIZED REMAINING WORK - item 9 awaits GitHub service recovery
+PUBLICATION WORK - intentionally deferred by Cam
 
 9. Render and publish slides; verify Canvas link (skill checklist 9).
 Location: 06-Linear-Models.html, index.html; Canvas slide link item 3180651,
@@ -26,7 +26,7 @@ index.html, publish via 8, verify deployed customer-data version, then refresh
 Canvas link only if needed and reconcile the stale downloadable HTML attachment.
 Effects: depends on 1-3 and 8. No slide generation performed during review.
 Decision: Approve - explicitly requested by Cam on 2026-10-05.
-Status: Blocked - GitHub Actions incident delays Pages deployment.
+Status: Needs update - deferred by Cam; do not publish materials yet.
 
 Work completed and verification limit (2026-10-05):
 - Inspected Cam's existing HTML; both HTML files match. All 41 instructional
@@ -48,31 +48,7 @@ Work completed and verification limit (2026-10-05):
 - Outstanding: verify successful deployment for the latest main commit and
   fetch the Canvas destination again. Refresh the version query if needed;
   compare against the committed index.html (Git uses LF line endings).
-NEW AUDIT FINDINGS - PENDING REVIEW
-
-24. Refresh the Exercise 5 solution delivery.
-Location: local Exercise 5 Solution.qmd/.docx; Canvas files 13545257
-(Exercise 05 Solution.qmd) and 13545231 (Exercise 05 Solution.docx).
-Evidence: both Canvas solution files still teach RFM recency/frequency and
-has the old rubric. The current customer-spending solution and rubric are in
-the lecture repository. Its local Word output predates the October 5 source
-edits, although its instructions and rubric still match the current exercise.
-Proposal: render the current solution into Word, inspect it, and upload/link
-the current Quarto and Word solution in the intended grading location.
-Effects: makes the rubric note in Grade Exercise 5 useful for this exercise.
-Decision: Pending - Approve / Alter / Reject.
-Status: Needs update.
-
-25. Include the customer-data README with the Canvas materials.
-Location: 06-starter-code.qmd opening instructions; customer-data-README.md;
-Canvas Inference module 415182.
-Evidence: the starter asks students to read customer-data-README.md, but the
-complete Canvas file inventory has no copy. The GitHub repository includes it.
-Proposal: add the README to the Lecture 06 Canvas materials or link its current
-GitHub copy so students can read the case context and attribution.
-Effects: fulfills the starter's reference and keeps the reuse notice with data.
-Decision: Pending - Approve / Alter / Reject.
-Status: Needs update.
+DEFERRED RELEASE
 
 26. Release the prepared Lecture 06 materials when ready.
 Location: Canvas Inference module 415182, Lecture 06 module items, dataset,
@@ -82,19 +58,22 @@ locked. This existing staging state was preserved during the requested uploads.
 Proposal: choose release timing, then publish/unlock the intended materials
 without prematurely releasing the later lectures in the same module.
 Effects: required for students to access the prepared Canvas materials.
-Decision: Pending - Approve / Alter / Reject.
-Status: Needs update - release timing not specified.
+Decision: Defer - Cam explicitly requested that no materials be published yet.
+Status: Needs update - intentionally deferred; retain unpublished/locked state.
 
-27. Place Exercise 5 in the Linear Models module block.
-Location: Canvas Inference module 415182, Exercise 5 item 3180655 and
-Grade Exercise 5 item 3180656; Evaluate Model Fit header 3180654.
-Evidence: both Exercise 5 assignments currently appear below the Evaluate
-Model Fit header, even though they now correspond to Lecture 06 Linear Models.
-Proposal: move the two assignment entries after the Lecture 06 starter and
-before the Evaluate Model Fit header, preserving assignment settings.
-Effects: makes Canvas sequence match the concluding exercise in Lecture 06.
-Decision: Pending - Approve / Alter / Reject.
-Status: Needs update.
+Verification notes (2026-10-05):
+- Fresh GET confirms Inference, Exercise 5 and Grade Exercise 5 remain unpublished.
+  New solution items and updated starter remain unpublished with locked files.
+- No GitHub push was performed; current repository edits are held locally.
 
+28. Synchronize the current repository updates when publication is authorized.
+Location: local Lecture 06 repository and origin/main.
+Evidence: current starter, Word solution, overview README and data-README
+removal are prepared locally; Canvas uploads are verified. A GitHub push also
+triggers the public Pages workflow.
+Proposal: hold these changes locally until Cam authorizes publication, then
+push the lecture updates and verify the remote state and deployed content.
+Decision: Deferred - Cam requested no material publication yet.
+Status: Needs update - intentionally deferred.
 USER REQUESTED CHANGES
 (Reserved for Cam's additions after discussion; preserve this section.)

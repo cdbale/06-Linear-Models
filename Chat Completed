@@ -552,3 +552,80 @@ Verification notes (2026-10-05):
 - No other lecture repositories or private data repository were changed.
 - GitHub Pages deployment remains separately pending under item 9 because
   the Actions service is delaying hosted-runner assignment.
+
+2026-10-05 - Solution upload and README removal
+
+24. Refresh the Exercise 5 solution delivery.
+Location: local Exercise 5 Solution.qmd/.docx; Canvas files 13545257
+(Exercise 05 Solution.qmd) and 13545231 (Exercise 05 Solution.docx).
+Evidence: both Canvas solution files still teach RFM recency/frequency and
+has the old rubric. The current customer-spending solution and rubric are in
+the lecture repository. Its local Word output predates the October 5 source
+edits, although its instructions and rubric still match the current exercise.
+Proposal: render the current solution into Word, inspect it, and upload/link
+the current Quarto and Word solution in the intended grading location.
+Effects: makes the rubric note in Grade Exercise 5 useful for this exercise.
+Decision: Approve - Cam requested upload below the current Exercise 5 assignments.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Regenerated the Word solution from the current Quarto source. All four code
+  chunks execute; sample size 9,800 and current coefficient results are present.
+- The old Word output included a data-README reference. The refreshed output
+  has none; current Quarto source and exercise instructions also have none.
+- Packaged renderer could not find LibreOffice. A separate hidden Word instance
+  exported the refreshed document; all three page images were inspected.
+  Instructions and rubric fit on page 1; code and interpretation are legible.
+- Uploaded Exercise 5 Solution.docx (13982129, item 3294370) and
+  Exercise 5 Solution.qmd (13982131, item 3294371), positions 11 and 12,
+  directly below Grade Exercise 5. Both downloaded files match local hashes.
+- Files remain locked and module items unpublished. Existing assignment
+  descriptions, points, due dates, submission types and publication state match
+  the pre-upload snapshot. Existing module items retain their relative order.
+
+2026-10-05 - Solution upload and README removal
+
+25. Include the customer-data README with the Canvas materials.
+Location: 06-starter-code.qmd opening instructions; customer-data-README.md;
+Canvas Inference module 415182.
+Evidence: the starter asks students to read customer-data-README.md, but the
+complete Canvas file inventory has no copy. The GitHub repository includes it.
+Proposal: add the README to the Lecture 06 Canvas materials or link its current
+GitHub copy so students can read the case context and attribution.
+Effects: fulfills the starter's reference and keeps the reuse notice with data.
+Decision: Alter - Cam requested deletion of the data README and all active references.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Deleted customer-data-README.md from the local lecture repository.
+- Removed its reference from the starter and repository overview README.
+- Refreshed Word solution to remove its old README reference. Current slide
+  source, both HTML files, solution Quarto source, and Canvas Exercise 5/Grade
+  Exercise 5 instructions already contain no data-README reference.
+- Re-uploaded modified starter: file 13982126, existing module item 3294325,
+  position 7; downloaded SHA-256 matches the 4,344-byte local artifact.
+- Uploaded refreshed Word and current Quarto solution under item 24.
+  Slide source/HTML and solution Quarto source are byte-for-byte unchanged,
+  so no slide generation or unnecessary HTML upload was performed.
+- Checked the rendered solution and all DOCX XML parts for remaining references.
+  Historical checklist evidence is retained as an audit record.
+
+2026-10-05 - Solution upload and README removal
+
+27. Place Exercise 5 in the Linear Models module block.
+Location: Canvas Inference module 415182, Exercise 5 item 3180655 and
+Grade Exercise 5 item 3180656; Evaluate Model Fit header 3180654.
+Evidence: both Exercise 5 assignments currently appear below the Evaluate
+Model Fit header, even though they now correspond to Lecture 06 Linear Models.
+Proposal: move the two assignment entries after the Lecture 06 starter and
+before the Evaluate Model Fit header, preserving assignment settings.
+Effects: makes Canvas sequence match the concluding exercise in Lecture 06.
+Decision: Reject - Cam explicitly requested keeping the current assignment placement.
+Status: Verified.
+
+Verification notes (2026-10-05):
+- Confirmed Evaluate Model Fit remains position 8, Exercise 5 position 9,
+  and Grade Exercise 5 position 10. Their identifiers and targets are unchanged.
+- Added Word and Quarto solution files below the two assignments.
+- No assignment was moved above the Evaluate Model Fit heading; all existing
+  module items retain their prior relative ordering.

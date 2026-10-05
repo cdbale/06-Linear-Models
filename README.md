@@ -8,8 +8,8 @@ relationship, and analyzing customer spending.
   GitHub Pages entry file.
 - Student starter code: `06-starter-code.qmd`.
 - Exercise and rubric: `Exercise 5 Solution.qmd` and its Word output.
-- Data: `home_goods_customers.csv`, with `data_dictionary.pdf`, the editable
-  `data_dictionary.md`, and attribution in `customer-data-README.md`.
+- Data: `home_goods_customers.csv`, with `data_dictionary.pdf` and the editable
+  `data_dictionary.md`.
 
 View the slides at <https://cdbale.github.io/06-Linear-Models/#1>.
 

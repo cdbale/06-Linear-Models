@@ -6,7 +6,7 @@ editor: visual
 
 This file contains the code for Lecture 06: Linear Models.
 
-Keep `home_goods_customers.csv` in your working folder. Read `data_dictionary.pdf` and `customer-data-README.md` for the case definitions and attribution. The data describe 10,000 customers of a fictional home-goods retailer and are semi-synthetic.
+Keep `home_goods_customers.csv` in your working folder. Read `data_dictionary.pdf` for the variable definitions. The data describe 10,000 customers of a fictional home-goods retailer and are semi-synthetic.
 
 ## Simulate Ben & Jerry's Spending
 
