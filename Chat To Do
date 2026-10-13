@@ -13,7 +13,7 @@ Data, 05 Tidy Data and Types. No rendering authorized.
 
 AUTHORIZED CHANGES VERIFIED - moved to Chat Completed
 
-PUBLICATION WORK - intentionally deferred by Cam
+AUTHORIZED REFRESH - requested by Cam on 2026-10-13
 
 9. Render and publish slides; verify Canvas link (skill checklist 9).
 Location: 06-Linear-Models.html, index.html; Canvas slide link item 3180651,
@@ -26,7 +26,7 @@ index.html, publish via 8, verify deployed customer-data version, then refresh
 Canvas link only if needed and reconcile the stale downloadable HTML attachment.
 Effects: depends on 1-3 and 8. No slide generation performed during review.
 Decision: Approve - explicitly requested by Cam on 2026-10-05.
-Status: Needs update - deferred by Cam; do not publish materials yet.
+Status: In progress - current GitHub publication and Canvas link verification authorized.
 
 Work completed and verification limit (2026-10-05):
 - Inspected Cam's existing HTML; both HTML files match. All 41 instructional
@@ -66,5 +66,15 @@ Verification notes (2026-10-05):
   New solution items and updated starter remain unpublished with locked files.
 - No GitHub push was performed; current repository edits are held locally.
 
+29. Publish Cam's October 13 slides and starter updates.
+Location: 06 Linear Models.Rmd, 06-Linear-Models.html, index.html,
+06-starter-code.qmd; Canvas Inference module 415182, Linear Models header
+3180647, HTML item 3294324, starter item 3294325, link item 3180651.
+Request: commit and push the updated files, replace both Canvas downloads under
+Linear Models, and verify the 06 - Slides GitHub Pages link serves this version.
+Verification so far: HTML/index identical; all 40 instructional headings match
+the source; completed starter code matches slides and student gaps remain.
+Decision: Approve - explicitly requested by Cam on 2026-10-13.
+Status: In progress - GitHub push, Canvas upload and deployment checks.
 USER REQUESTED CHANGES
 (Reserved for Cam's additions after discussion; preserve this section.)

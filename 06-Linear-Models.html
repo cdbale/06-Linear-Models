@@ -3319,9 +3319,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; }
 
 <p>Our slope estimate, \(\beta_1\), describes an association, <strong>not a causal relationship</strong> (except under very specific circumstances).</p>
 
-</article></slide><slide class=""><hgroup><h2>Modeling Error</h2></hgroup><article  id="modeling-error">
+</article></slide><slide class=""><hgroup><h2>Notes on \(\epsilon\)</h2></hgroup><article  id="notes-on-epsilon">
 
-<p>Linear regression is a model for a <strong>continuous outcome</strong> (<em>e.g.</em>, sales). For this class, assume independent errors with mean zero and constant variance:</p>
+<p>\[y = \beta_0 + \beta_1 x + \epsilon\]</p>
+
+<p>Linear regression is a model for a <strong>continuous outcome</strong> (<em>e.g.</em>, sales).</p>
+
+<p>Our \(x\) variables will never <em>fully</em> account for all of the variation in our outcome, <em>i.e.</em>, our model needs to account for <strong>errors</strong>.</p>
+
+<p>We will assume errors are independent across observations, with mean zero and constant standard deviation:</p>
 
 <p>\[\epsilon \sim Normal(0, \sigma^2)\]</p>
 
@@ -3455,7 +3461,9 @@ rnorm(1)</pre>
 
 <p><strong>tidymodels</strong> provides consistent modeling syntax. Specify the <strong>model type</strong> with <code>linear_reg()</code> and the <strong>engine</strong> (the implementation) with <code>set_engine(&quot;lm&quot;)</code>.</p>
 
-<pre class = 'prettyprint lang-r'>library(tidymodels)</pre>
+<pre class = 'prettyprint lang-r'># install.packages(&quot;tidymodels&quot;)
+
+library(tidymodels)</pre>
 
 <pre class = 'prettyprint lang-r'>reg_model &lt;- linear_reg() |&gt; 
   set_engine(&quot;lm&quot;)</pre>
@@ -3501,7 +3509,7 @@ rnorm(1)</pre>
 <li>What else might influence customer spending?</li>
 </ul>
 
-<p>Remember: a model simplifies the full story. Its usefulness depends on the question and whether its assumptions are reasonable.</p>
+<p>Remember: a model simplifies the full story.</p>
 
 </article></slide><slide class=""><hgroup><h2>Our Customer Data</h2></hgroup><article  id="our-customer-data">
 
@@ -3513,19 +3521,6 @@ rnorm(1)</pre>
 </ul>
 
 <p>Reference the accompanying <code>data_dictionary.pdf</code> for definitions.</p>
-
-</article></slide><slide class=""><hgroup><h2>Build : Turn the Story into a (Hypothetical) Model</h2></hgroup><article  id="build-turn-the-story-into-a-hypothetical-model">
-
-<p>Start with an illustrative equation. Let <code>IncomeThousands</code> be annual household income divided by 1,000:</p>
-
-<p>\[\widehat{\text{PreviousSpend}} = 750 + 3 \times \text{IncomeThousands}\]</p>
-
-<ul>
-<li><strong>Input:</strong> annual household income in thousands of dollars.</li>
-<li><strong>Output:</strong> predicted previous 12-month spending in dollars.</li>
-<li><strong>Intercept:</strong> predicted spending is $750 at zero income; zero is outside our observed income range.</li>
-<li><strong>Slope:</strong> another $1,000 of household income is associated with $3 more predicted spending.</li>
-</ul>
 
 </article></slide><slide class=""><hgroup><h2>From Simulation to Customer Data</h2></hgroup><article  id="from-simulation-to-customer-data">
 
@@ -3627,7 +3622,7 @@ customer_model |&gt;
 
 <p>Use <code>home_goods_customers.csv</code> and its data dictionary. The outcome is <code>PreviousSpend</code> (dollars at this retailer over 12 months); the two explanatory variables are <code>HouseholdIncome</code> (annual dollars) and <code>HouseholdSize</code> (people).</p>
 
-<p>Express income in thousands of dollars. Use customers with observed values for the model’s variables and report how many are included. The question concerns historical spending, not the later email campaign.</p>
+<p>Express income in thousands of dollars. Use customers with observed values for the model’s variables and report how many are included.</p>
 
 </article></slide><slide class=""><hgroup><h2>Exercise 5: The Client Report</h2></hgroup><article  id="exercise-5-the-client-report">
 
@@ -3639,7 +3634,7 @@ customer_model |&gt;
 <li>A brief conclusion for the retailer, including why these associations alone do not establish that an outreach action would increase spending.</li>
 </ul>
 
-<p>Choose the code operations and their sequence. Upload your report to Canvas’s <strong>Exercise 5</strong> assignment.</p></article></slide>
+<p>Upload your report to Canvas’s <strong>Exercise 5</strong> assignment.</p></article></slide>
 
 
   <slide class="backdrop"></slide>
