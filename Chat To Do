@@ -13,68 +13,9 @@ Data, 05 Tidy Data and Types. No rendering authorized.
 
 AUTHORIZED CHANGES VERIFIED - moved to Chat Completed
 
-AUTHORIZED REFRESH - requested by Cam on 2026-10-13
+October 13 refresh verified; see Chat Completed.
 
-9. Render and publish slides; verify Canvas link (skill checklist 9).
-Location: 06-Linear-Models.html, index.html; Canvas slide link item 3180651,
-https://cdbale.github.io/06-Linear-Models/#1; legacy HTML file item 3180652.
-Evidence: live Pages HTTP 200 on 2026-09-28 still contains soup, lacks HouseholdIncome
-and learning goals. Existing generated HTML uses the previous lesson; source edits do not
-update it. Canvas's Pages URL already uses 06. No local automated build found.
-Proposal: on explicit render authorization, render and inspect slides, update
-index.html, publish via 8, verify deployed customer-data version, then refresh
-Canvas link only if needed and reconcile the stale downloadable HTML attachment.
-Effects: depends on 1-3 and 8. No slide generation performed during review.
-Decision: Approve - explicitly requested by Cam on 2026-10-05.
-Status: In progress - current GitHub publication and Canvas link verification authorized.
+Current release configuration verified; see Chat Completed.
 
-Work completed and verification limit (2026-10-05):
-- Inspected Cam's existing HTML; both HTML files match. All 41 instructional
-  headings match current source in order; rocket image is embedded. No render
-  performed. The committed index matches local HTML after line-ending normalization.
-- Uploaded 06-Linear-Models.html to Canvas: file 13981354, module item 3294324,
-  position 6, size 4,219,544 bytes. Downloaded file matches local SHA-256:
-  CD31CD91DE059725BBF71E02B730E8DE6955A08F301E0C71D71E86C445A1EEFD.
-- Fresh inventory confirms one current HTML item and the intended starter;
-  old module attachments were already removed. Unrelated items were preserved.
-- Updated 06 - Slides item 3180651 and read back the saved versioned URL:
-  https://cdbale.github.io/06-Linear-Models/?v=7a864e948b06cec60c4f56415b60359890ea229b#1
-  Preserved title, new-tab behavior and unpublished state.
-- Pages run 37365873753 for 7a864e948b06cec60c4f56415b60359890ea229b remained queued during the bounded check.
-  GitHub reports an active Actions incident with delayed runner assignment:
-  https://stspg.io/c11dc9nb1zdq
-- Fresh fetch from the saved Canvas URL still returns the prior slide version.
-  Therefore item 9 remains active; no deployment completion is claimed.
-- Outstanding: verify successful deployment for the latest main commit and
-  fetch the Canvas destination again. Refresh the version query if needed;
-  compare against the committed index.html (Git uses LF line endings).
-DEFERRED RELEASE
-
-26. Release the prepared Lecture 06 materials when ready.
-Location: Canvas Inference module 415182, Lecture 06 module items, dataset,
-dictionary, Exercise 5 (1452129), and Grade Exercise 5 (1452147).
-Evidence: module and Lecture 06 items/assignments are unpublished; files are
-locked. This existing staging state was preserved during the requested uploads.
-Proposal: choose release timing, then publish/unlock the intended materials
-without prematurely releasing the later lectures in the same module.
-Effects: required for students to access the prepared Canvas materials.
-Decision: Defer - Cam explicitly requested that no materials be published yet.
-Status: Needs update - intentionally deferred; retain unpublished/locked state.
-
-Verification notes (2026-10-05):
-- Fresh GET confirms Inference, Exercise 5 and Grade Exercise 5 remain unpublished.
-  New solution items and updated starter remain unpublished with locked files.
-- No GitHub push was performed; current repository edits are held locally.
-
-29. Publish Cam's October 13 slides and starter updates.
-Location: 06 Linear Models.Rmd, 06-Linear-Models.html, index.html,
-06-starter-code.qmd; Canvas Inference module 415182, Linear Models header
-3180647, HTML item 3294324, starter item 3294325, link item 3180651.
-Request: commit and push the updated files, replace both Canvas downloads under
-Linear Models, and verify the 06 - Slides GitHub Pages link serves this version.
-Verification so far: HTML/index identical; all 40 instructional headings match
-the source; completed starter code matches slides and student gaps remain.
-Decision: Approve - explicitly requested by Cam on 2026-10-13.
-Status: In progress - GitHub push, Canvas upload and deployment checks.
 USER REQUESTED CHANGES
 (Reserved for Cam's additions after discussion; preserve this section.)
